@@ -26,7 +26,7 @@ public class UserGoals {
 
     public UserGoals() {
         this.dailyCalorieGoal = 2000;
-        this.dailyBurnGoal = 500;
+        this.dailyBurnGoal = 0;
         this.proteinGoal = 150;
         this.carbsGoal = 250;
         this.fatGoal = 65;

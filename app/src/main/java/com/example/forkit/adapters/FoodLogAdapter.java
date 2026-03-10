@@ -21,13 +21,22 @@ public class FoodLogAdapter extends RecyclerView.Adapter<FoodLogAdapter.ViewHold
     private List<FoodEntry> entries = new ArrayList<>();
     private FoodSorter.SortBy currentSort = FoodSorter.SortBy.TIME_NEWEST;
     private OnDeleteClickListener deleteListener;
+    private OnItemClickListener itemClickListener;
 
     public interface OnDeleteClickListener {
         void onDelete(FoodEntry entry);
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(FoodEntry entry);
+    }
+
     public FoodLogAdapter(OnDeleteClickListener listener) {
         this.deleteListener = listener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
     }
 
     public FoodSorter.SortBy currentSort() { return currentSort; }
@@ -61,15 +70,11 @@ public class FoodLogAdapter extends RecyclerView.Adapter<FoodLogAdapter.ViewHold
                 "P: %.0fg  C: %.0fg  F: %.0fg",
                 entry.getProtein(), entry.getCarbs(), entry.getFat()));
 
-        int color;
-        switch (entry.getMealType() != null ? entry.getMealType() : "Snack") {
-            case "Breakfast": color = 0xFFFFA726; break;
-            case "Lunch":     color = 0xFF66BB6A; break;
-            case "Dinner":    color = 0xFF5C6BC0; break;
-            default:          color = 0xFFEF5350; break;
-        }
-        holder.mealTag.setBackgroundColor(color);
+        holder.mealTag.setBackgroundColor(0xFF314c1c); // dark_green
 
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) itemClickListener.onItemClick(entry);
+        });
         holder.btnDelete.setOnClickListener(v -> {
             if (deleteListener != null) deleteListener.onDelete(entry);
         });

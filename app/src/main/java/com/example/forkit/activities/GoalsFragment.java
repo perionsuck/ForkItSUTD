@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.forkit.MainActivity;
 import com.example.forkit.R;
 import com.example.forkit.models.UserGoals;
 import com.example.forkit.utils.SupabaseApi;
@@ -50,6 +51,10 @@ public class GoalsFragment extends Fragment {
         etCarbs    = view.findViewById(R.id.et_carbs);
         etFat      = view.findViewById(R.id.et_fat);
         btnSave    = view.findViewById(R.id.btn_save_goals);
+
+        view.findViewById(R.id.btn_goals_menu).setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).openDrawer();
+        });
 
         // Load existing goals into fields
         etName.setText(HomeFragment.userGoals.getUserName());

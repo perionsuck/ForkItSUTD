@@ -22,6 +22,13 @@ public class DateUtils {
         return cal.getTimeInMillis();
     }
 
+    public static String getGreeting() {
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        if (hour < 12) return "Good morning";
+        if (hour < 18) return "Good afternoon";
+        return "Good evening";
+    }
+
     public static String getMealTypeForHour() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         if (hour >= 5 && hour < 11)  return "Breakfast";

@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AlertDialogLight" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorSurface">@color/surface_white</item>
+        <item name="colorOnSurface">@color/text_black</item>
+        <item name="android:windowBackground">@color/surface_white</item>
+        <item name="colorPrimary">@color/dark_green</item>
+        <item name="android:textColorHint">@color/text_black</item>
+        <item name="android:textColorPrimary">@color/text_black</item>
+    </style>
+    <style name="ThemeOverlay.SearchHintBlack" parent="ThemeOverlay.MaterialComponents.Light">
+        <item name="colorOnSurface">@color/text_black</item>
+        <item name="android:textColorHint">@color/text_black</item>
+        <item name="colorControlActivated">@color/dark_green</item>
+    </style>
     <style name="Theme.ForkIt" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/accent_green</item>
         <item name="colorPrimaryVariant">#25A244</item>
@@ -9,9 +22,9 @@
         <item name="android:colorBackground">@color/bg_dark</item>
         <item name="colorSurface">@color/surface_dark</item>
         <item name="colorOnSurface">@color/text_primary</item>
-        <item name="android:windowBackground">@color/bg_dark</item>
-        <item name="android:statusBarColor">@color/bg_dark</item>
-        <item name="android:navigationBarColor">@color/surface_dark</item>
+        <item name="android:windowBackground">@color/bg_warm</item>
+        <item name="android:statusBarColor">@color/bg_warm</item>
+        <item name="android:navigationBarColor">@color/dark_green</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
     </style>

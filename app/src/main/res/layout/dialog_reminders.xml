@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/surface_white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reminders and Notifications"
+        android:fontFamily="@font/antic_didone"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#314c1c"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Enable meal reminders"
+            android:fontFamily="@font/convergence"
+            android:textSize="16sp"
+            android:textColor="#314c1c"/>
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_reminders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:thumbTint="@color/dark_green"
+            app:trackTint="@color/dark_green"/>
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Reminder times (e.g. 8:00, 12:00, 18:00)"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/text_black"
+        app:hintTextColor="@color/text_black"
+        android:layout_marginBottom="20dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_reminder_times"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/text_black"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save_reminders"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Save"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:backgroundTint="@color/dark_green"
+        app:cornerRadius="12dp"/>
+</LinearLayout>
