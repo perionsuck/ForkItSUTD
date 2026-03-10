@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🔍 Food Lookup"
+            android:text="📷 scan meal"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
@@ -24,10 +24,56 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search any food to get calories and macros"
+            android:text="take a photo or search by name"
             android:textSize="13sp"
             android:textColor="@color/text_secondary"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_camera"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:text="📷 camera"
+                android:textSize="14sp"
+                app:backgroundTint="@color/surface_darker"
+                app:cornerRadius="12dp"
+                android:layout_marginEnd="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_gallery"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:text="🖼 gallery"
+                android:textSize="14sp"
+                app:backgroundTint="@color/surface_darker"
+                app:cornerRadius="12dp"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_meal_preview"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:background="@color/surface_darker"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="or search"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="8dp"/>
 
         <!-- Search card -->
         <androidx.cardview.widget.CardView

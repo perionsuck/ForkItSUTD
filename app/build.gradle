@@ -2,6 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+def localProperties = new Properties()
+try {
+    localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+} catch (Exception e) {}
+def geminiApiKey = localProperties.getProperty("GEMINI_API_KEY", "")
+
 android {
     namespace 'com.example.forkit'
     compileSdk 35
@@ -13,6 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "GEMINI_API_KEY", "\"${geminiApiKey}\""
     }
 
     buildTypes {
@@ -29,6 +36,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 }
 
