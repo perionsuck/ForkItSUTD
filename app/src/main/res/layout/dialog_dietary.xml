@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface_white">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dietary preferences"
+        android:fontFamily="@font/antic_didone"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#314c1c"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select options (used to filter recommendations):"
+        android:fontFamily="@font/convergence"
+        android:textSize="13sp"
+        android:textColor="#314c1c"
+        android:alpha="0.8"
+        android:layout_marginBottom="12dp"/>
+
+    <CheckBox
+        android:id="@+id/cb_vegetarian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vegetarian"
+        android:textColor="#314c1c"
+        android:buttonTint="@color/dark_green"/>
+
+    <CheckBox
+        android:id="@+id/cb_vegan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vegan"
+        android:textColor="#314c1c"
+        android:buttonTint="@color/dark_green"/>
+
+    <CheckBox
+        android:id="@+id/cb_gluten_free"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gluten-free"
+        android:textColor="#314c1c"
+        android:buttonTint="@color/dark_green"/>
+
+    <CheckBox
+        android:id="@+id/cb_low_carb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Low carb"
+        android:textColor="#314c1c"
+        android:buttonTint="@color/dark_green"/>
+
+    <CheckBox
+        android:id="@+id/cb_dairy_free"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dairy-free"
+        android:textColor="#314c1c"
+        android:buttonTint="@color/dark_green"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Add custom (comma separated)"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/text_black"
+        app:hintTextColor="@color/text_black"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_dietary_extra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/text_black"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save_dietary"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Save"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:backgroundTint="@color/dark_green"
+        app:cornerRadius="12dp"/>
+</LinearLayout>
+</ScrollView>

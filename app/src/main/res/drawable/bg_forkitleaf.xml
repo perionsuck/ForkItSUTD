@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/bg_warm"/>
+    <item>
+        <bitmap
+            android:src="@drawable/forkitleaf_bg"
+            android:alpha="0.12"
+            android:gravity="fill"/>
+    </item>
+</layer-list>

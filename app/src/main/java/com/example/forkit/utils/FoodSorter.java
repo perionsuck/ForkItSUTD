@@ -126,13 +126,14 @@ public class FoodSorter {
     }
 
     private static int mealOrder(String mealType) {
-        if (mealType == null) return 4;
+        if (mealType == null) return 5;
         switch (mealType) {
             case "Breakfast": return 0;
             case "Lunch":     return 1;
             case "Dinner":    return 2;
-            case "Snack":     return 3;
-            default:          return 4;
+            case "Tea":       return 3;
+            case "Snack":     return 4;
+            default:          return 5;
         }
     }
 }

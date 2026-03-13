@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="When did you have this?"
+        android:fontFamily="@font/convergence"
+        android:textSize="16sp"
+        android:textColor="@color/dark_green"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:id="@+id/option_breakfast"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Breakfast"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/convergence"
+        android:textColor="@color/dark_green"/>
+    <TextView
+        android:id="@+id/option_lunch"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Lunch"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/convergence"
+        android:textColor="@color/dark_green"/>
+    <TextView
+        android:id="@+id/option_dinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Dinner"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/convergence"
+        android:textColor="@color/dark_green"/>
+    <TextView
+        android:id="@+id/option_tea"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Tea"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/convergence"
+        android:textColor="@color/dark_green"/>
+    <TextView
+        android:id="@+id/option_snack"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Snack"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/convergence"
+        android:textColor="@color/dark_green"/>
+</LinearLayout>

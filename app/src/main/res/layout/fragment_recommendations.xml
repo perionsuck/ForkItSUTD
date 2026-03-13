@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_forkitleaf_tabs"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:paddingTop="48dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Fork it"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/antic_didone"
+                android:textColor="@color/dark_green"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/btn_back_recommendations"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_left"
+                android:contentDescription="back"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_recommendations_greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/convergence"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_green"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Here are your personalised meals"
+            android:fontFamily="@font/convergence"
+            android:textSize="14sp"
+            android:textColor="@color/dark_green"
+            android:alpha="0.8"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/dark_green"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="12dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_check_green"
+                    android:contentDescription=""
+                    app:tint="@color/surface_white"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Let's fuel your day with these high protein options"
+                    android:fontFamily="@font/convergence"
+                    android:textSize="14sp"
+                    android:textColor="@color/surface_white"
+                    android:layout_marginStart="12dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="These suggestions are based on your fitness goals and activity level"
+            android:fontFamily="@font/convergence"
+            android:textSize="12sp"
+            android:textColor="@color/dark_green"
+            android:alpha="0.7"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personalised Meals"
+            android:fontFamily="@font/convergence"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_green"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_no_dietary_match"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No meals match your dietary preferences. Try adjusting in Settings."
+            android:fontFamily="@font/convergence"
+            android:textSize="14sp"
+            android:textColor="@color/dark_green"
+            android:alpha="0.8"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/meal_rec_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/surface_white"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <View android:layout_width="60dp" android:layout_height="60dp" android:background="@color/water_blue" android:alpha="0.3"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                    <TextView android:id="@+id/tv_meal_1_name" android:text="Greek yoghurt bowl" android:fontFamily="@font/convergence" android:textSize="14sp" android:textColor="@color/dark_green"/>
+                    <TextView android:id="@+id/tv_meal_1_detail" android:text="1 bowl (450g)  P 20g C 15g F 13g" android:fontFamily="@font/convergence" android:textSize="12sp" android:textColor="@color/dark_green" android:alpha="0.7"/>
+                </LinearLayout>
+                <TextView android:id="@+id/tv_meal_1_kcal" android:text="320 kcal" android:fontFamily="@font/convergence" android:textSize="13sp" android:textColor="@color/dark_green" android:layout_marginEnd="8dp"/>
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_plus_green" android:contentDescription="add"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/meal_rec_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/surface_white"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <View android:layout_width="60dp" android:layout_height="60dp" android:background="@color/water_blue" android:alpha="0.3"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                    <TextView android:id="@+id/tv_meal_2_name" android:text="Chicken salad" android:fontFamily="@font/convergence" android:textSize="14sp" android:textColor="@color/dark_green"/>
+                    <TextView android:id="@+id/tv_meal_2_detail" android:text="1 bowl (450g)  P 13g C 20g F 4g" android:fontFamily="@font/convergence" android:textSize="12sp" android:textColor="@color/dark_green" android:alpha="0.7"/>
+                </LinearLayout>
+                <TextView android:id="@+id/tv_meal_2_kcal" android:text="450 kcal" android:fontFamily="@font/convergence" android:textSize="13sp" android:textColor="@color/dark_green" android:layout_marginEnd="8dp"/>
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_plus_green" android:contentDescription="add"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/meal_rec_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/surface_white"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <View android:layout_width="60dp" android:layout_height="60dp" android:background="@color/water_blue" android:alpha="0.3"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                    <TextView android:id="@+id/tv_meal_3_name" android:text="Salmon with broccoli &amp; quinoa" android:fontFamily="@font/convergence" android:textSize="14sp" android:textColor="@color/dark_green"/>
+                    <TextView android:id="@+id/tv_meal_3_detail" android:text="1 bowl (500g)  P 32g C 40g F 15g" android:fontFamily="@font/convergence" android:textSize="12sp" android:textColor="@color/dark_green" android:alpha="0.7"/>
+                </LinearLayout>
+                <TextView android:id="@+id/tv_meal_3_kcal" android:text="520 kcal" android:fontFamily="@font/convergence" android:textSize="13sp" android:textColor="@color/dark_green" android:layout_marginEnd="8dp"/>
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_plus_green" android:contentDescription="add"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not happy with our suggestions?"
+            android:fontFamily="@font/convergence"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_green"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_filters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="false"
+            app:selectionRequired="false"
+            android:layout_marginBottom="12dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_more_protein"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More protein"
+                android:textColor="@color/dark_green"
+                app:chipBackgroundColor="@color/surface_white"
+                app:chipStrokeColor="@color/dark_green"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_less_fat"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Less fat"
+                android:textColor="@color/dark_green"
+                app:chipBackgroundColor="@color/surface_white"
+                app:chipStrokeColor="@color/dark_green"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_no_carbs"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No carbs"
+                android:textColor="@color/dark_green"
+                app:chipBackgroundColor="@color/surface_white"
+                app:chipStrokeColor="@color/dark_green"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_less_carbs"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Less carbs"
+                android:textColor="@color/dark_green"
+                app:chipBackgroundColor="@color/surface_white"
+                app:chipStrokeColor="@color/dark_green"/>
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_regenerate"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Regenerate"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="@color/dark_green"
+            app:cornerRadius="12dp"/>
+    </LinearLayout>
+</ScrollView>
