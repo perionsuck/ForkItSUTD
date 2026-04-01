@@ -34,7 +34,7 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/surface_white"
+        android:background="@color/surface_soft"
         android:orientation="vertical"
         android:padding="24dp">
 
@@ -108,5 +108,17 @@
             android:fontFamily="@font/convergence"
             android:textSize="16sp"
             android:textColor="@color/dark_green"/>
+
+        <TextView
+            android:id="@+id/drawer_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:padding="16dp"
+            android:text="Logout"
+            android:fontFamily="@font/convergence"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#B00020"/>
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

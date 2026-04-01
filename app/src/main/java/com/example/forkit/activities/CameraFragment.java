@@ -32,6 +32,8 @@ import com.example.forkit.utils.GeminiApi;
 import com.example.forkit.utils.GeminiClient;
 import com.example.forkit.utils.GeminiNutritionResult;
 import com.example.forkit.utils.PrefsHelper;
+import com.example.forkit.utils.SupabaseApi;
+import com.example.forkit.utils.SupabaseClient;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -333,11 +335,32 @@ public class CameraFragment extends Fragment {
         String ing = r.ingredients != null ? r.ingredients : "";
         FoodEntry entry = new FoodEntry(capitalize(r.name), cal, protein, carbs, fat, mealType, ing, portion);
         if (uri != null && !Uri.EMPTY.equals(uri)) entry.setImagePath(uri.toString());
-        HomeFragment.foodEntries.add(entry);
+        addEntryAndSync(entry);
         new PrefsHelper(requireContext()).onFoodLogged();
         resultContainer.setVisibility(View.GONE);
         inputView.setVisibility(View.VISIBLE);
         Snackbar.make(requireView(), capitalize(r.name) + " added", Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void addEntryAndSync(FoodEntry entry) {
+        HomeFragment.foodEntries.add(entry);
+        PrefsHelper prefs = new PrefsHelper(requireContext());
+        String userId = prefs.getUserId();
+        if (userId == null || userId.isEmpty()) return;
+
+        entry.setUserId(userId);
+        SupabaseApi api = SupabaseClient.getClient().create(SupabaseApi.class);
+        api.insertFoodEntry(entry).enqueue(new Callback<java.util.List<FoodEntry>>() {
+            @Override
+            public void onResponse(Call<java.util.List<FoodEntry>> call, Response<java.util.List<FoodEntry>> response) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    entry.setId(response.body().get(0).getId());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<java.util.List<FoodEntry>> call, Throwable t) {}
+        });
     }
 
     private String capitalize(String s) {

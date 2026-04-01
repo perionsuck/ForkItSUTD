@@ -24,9 +24,17 @@ import com.example.forkit.R;
 import com.example.forkit.models.UserGoals;
 import com.example.forkit.utils.CalorieCalculator;
 import com.example.forkit.utils.PrefsHelper;
+import com.example.forkit.utils.SupabaseApi;
+import com.example.forkit.utils.SupabaseClient;
 
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SettingsFragment extends Fragment {
 
@@ -95,10 +103,15 @@ public class SettingsFragment extends Fragment {
         ((TextView) view.findViewById(R.id.tv_settings_name)).setText(name);
         ((TextView) view.findViewById(R.id.tv_settings_handle)).setText(handle);
         ((TextView) view.findViewById(R.id.tv_settings_goal)).setText("Goal: " + g.getDailyCalorieGoal() + " kcal/day");
-        ((TextView) view.findViewById(R.id.stat1)).setText(remaining + " kcal remaining");
-        ((TextView) view.findViewById(R.id.stat2)).setText(String.format("%.1f kg", p.getWeight()));
-        ((TextView) view.findViewById(R.id.stat3)).setText(g.getDailyCalorieGoal() + " kcal goal");
-        ((TextView) view.findViewById(R.id.stat4)).setText(String.format("%.1f kg goal", p.getGoalWeight()));
+
+        TextView tvAge = view.findViewById(R.id.tv_profile_age);
+        if (tvAge != null) tvAge.setText(p.hasAge() ? ("Age " + p.getAge()) : "Age —");
+
+        TextView tvHeight = view.findViewById(R.id.tv_profile_height);
+        if (tvHeight != null) tvHeight.setText(p.hasHeightCm() ? ("Height " + String.format("%.0f cm", p.getHeightCm())) : "Height —");
+
+        TextView tvWeight = view.findViewById(R.id.tv_profile_weight);
+        if (tvWeight != null) tvWeight.setText(p.hasWeight() ? ("Weight " + String.format("%.1f kg", p.getWeight())) : "Weight —");
     }
 
     private void showPersonalDetailsDialog() {
@@ -106,15 +119,23 @@ public class SettingsFragment extends Fragment {
         View v = LayoutInflater.from(ctx).inflate(R.layout.dialog_personal_details, null);
         ((EditText) v.findViewById(R.id.et_name)).setText(p.getUserName());
         ((EditText) v.findViewById(R.id.et_handle)).setText(p.getUserHandle());
-        ((EditText) v.findViewById(R.id.et_age)).setText(String.valueOf(p.getAge()));
-        ((EditText) v.findViewById(R.id.et_height)).setText(String.valueOf(p.getHeightCm()));
-        ((EditText) v.findViewById(R.id.et_weight)).setText(String.valueOf(p.getWeight()));
-        ((EditText) v.findViewById(R.id.et_goal_weight)).setText(String.valueOf(p.getGoalWeight()));
+        ((EditText) v.findViewById(R.id.et_age)).setText(p.hasAge() ? String.valueOf(p.getAge()) : "");
+        ((EditText) v.findViewById(R.id.et_height)).setText(p.hasHeightCm() ? String.valueOf(p.getHeightCm()) : "");
+        ((EditText) v.findViewById(R.id.et_weight)).setText(p.hasWeight() ? String.valueOf(p.getWeight()) : "");
+        ((EditText) v.findViewById(R.id.et_goal_weight)).setText(p.hasGoalWeight() ? String.valueOf(p.getGoalWeight()) : "");
 
-        ((RadioButton) v.findViewById(p.isMale() ? R.id.rb_male : R.id.rb_female)).setChecked(true);
-        int act = p.getActivityLevel();
-        int actId = act == 0 ? R.id.rb_sedentary : act == 1 ? R.id.rb_light : act == 2 ? R.id.rb_moderate : act == 3 ? R.id.rb_active : R.id.rb_extra;
-        ((RadioButton) v.findViewById(actId)).setChecked(true);
+        if (p.hasGender()) {
+            ((RadioButton) v.findViewById(p.isMale() ? R.id.rb_male : R.id.rb_female)).setChecked(true);
+        } else {
+            ((RadioGroup) v.findViewById(R.id.rg_gender)).clearCheck();
+        }
+        if (p.hasActivityLevel()) {
+            int act = p.getActivityLevel();
+            int actId = act == 0 ? R.id.rb_sedentary : act == 1 ? R.id.rb_light : act == 2 ? R.id.rb_moderate : act == 3 ? R.id.rb_active : R.id.rb_extra;
+            ((RadioButton) v.findViewById(actId)).setChecked(true);
+        } else {
+            ((RadioGroup) v.findViewById(R.id.rg_activity)).clearCheck();
+        }
 
         AlertDialog dialog = new AlertDialog.Builder(requireContext(), R.style.AlertDialogLight).setView(v).create();
         v.findViewById(R.id.btn_save_personal).setOnClickListener(x -> {
@@ -137,7 +158,27 @@ public class SettingsFragment extends Fragment {
 
             int calGoal = CalorieCalculator.calculateDailyCalories(p.isMale(), p.getWeight(), p.getHeightCm(), p.getAge(), actLevel);
             p.setCalorieGoal(calGoal);
+            HomeFragment.userGoals.setUserName(p.getUserName());
+            HomeFragment.userGoals.setUserHandle(p.getUserHandle());
+            HomeFragment.userGoals.setAge(p.getAge());
+            HomeFragment.userGoals.setHeightCm(p.getHeightCm());
+            HomeFragment.userGoals.setWeightKg(p.getWeight());
+            HomeFragment.userGoals.setGoalWeightKg(p.getGoalWeight());
+            HomeFragment.userGoals.setMale(p.isMale());
+            HomeFragment.userGoals.setActivityLevel(actLevel);
             HomeFragment.userGoals.setDailyCalorieGoal(calGoal);
+
+            String userId = p.getUserId();
+            if (userId != null && !userId.isEmpty()) {
+                HomeFragment.userGoals.setId(userId);
+                SupabaseApi api = SupabaseClient.getClient().create(SupabaseApi.class);
+                api.updateUserGoals("eq." + userId, HomeFragment.userGoals).enqueue(new Callback<List<UserGoals>>() {
+                    @Override
+                    public void onResponse(Call<List<UserGoals>> call, Response<List<UserGoals>> response) {}
+                    @Override
+                    public void onFailure(Call<List<UserGoals>> call, Throwable t) {}
+                });
+            }
 
             Toast.makeText(requireContext(), "Saved. Calorie goal: " + calGoal + " kcal/day", Toast.LENGTH_SHORT).show();
             View fv = getView();

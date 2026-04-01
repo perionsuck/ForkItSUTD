@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class FoodEntry {
 
-    private int id;
+    private Integer id;
+    @SerializedName("user_id")
+    private String userId;
     @SerializedName("food_name")
     private String foodName;
     private int calories;
@@ -17,6 +19,7 @@ public class FoodEntry {
     @SerializedName("meal_type")
     private String mealType;
     private String ingredients;
+    @SerializedName("portion_g")
     private int portionG;
 
     public FoodEntry(String foodName, int calories, float protein, float carbs, float fat, String mealType) {
@@ -37,7 +40,11 @@ public class FoodEntry {
 
     // Getters
     public int getId() {
-        return id;
+        return id != null ? id : 0;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public String getFoodName() {
@@ -83,6 +90,10 @@ public class FoodEntry {
     // Setters
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setImagePath(String imagePath) {

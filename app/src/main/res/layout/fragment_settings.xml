@@ -74,7 +74,7 @@
                     android:fontFamily="@font/convergence"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/dark_green"/>
+                    android:textColor="@color/text_black"/>
 
                 <TextView
                     android:id="@+id/tv_settings_handle"
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/convergence"
                     android:textSize="13sp"
-                    android:textColor="@color/dark_green"
+                    android:textColor="@color/text_black"
                     android:alpha="0.7"/>
 
                 <TextView
@@ -91,76 +91,68 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/convergence"
                     android:textSize="12sp"
-                    android:textColor="@color/dark_green"
+                    android:textColor="@color/text_muted"
                     android:layout_marginTop="4dp"/>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/profile_metrics_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="20dp">
 
             <TextView
-                android:id="@+id/stat1"
+                android:id="@+id/tv_profile_age"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:minWidth="0dp"
-                android:minHeight="48dp"
                 android:gravity="center"
-                android:background="@color/surface_white"
+                android:textAlignment="center"
+                android:includeFontPadding="false"
+                android:background="@color/surface_soft"
                 android:padding="12dp"
                 android:fontFamily="@font/convergence"
-                android:textSize="11sp"
-                android:textColor="@color/dark_green"
-                android:layout_marginEnd="4dp"/>
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:layout_marginEnd="4dp"
+                android:text="Age —" />
 
             <TextView
-                android:id="@+id/stat2"
+                android:id="@+id/tv_profile_height"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:minWidth="0dp"
-                android:minHeight="48dp"
                 android:gravity="center"
-                android:background="@color/surface_white"
+                android:textAlignment="center"
+                android:includeFontPadding="false"
+                android:background="@color/surface_soft"
                 android:padding="12dp"
                 android:fontFamily="@font/convergence"
-                android:textSize="11sp"
-                android:textColor="@color/dark_green"
-                android:layout_marginHorizontal="4dp"/>
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:layout_marginHorizontal="4dp"
+                android:text="Height —" />
 
             <TextView
-                android:id="@+id/stat3"
+                android:id="@+id/tv_profile_weight"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:minWidth="0dp"
-                android:minHeight="48dp"
                 android:gravity="center"
-                android:background="@color/surface_white"
+                android:textAlignment="center"
+                android:includeFontPadding="false"
+                android:background="@color/surface_soft"
                 android:padding="12dp"
                 android:fontFamily="@font/convergence"
-                android:textSize="11sp"
-                android:textColor="@color/dark_green"
-                android:layout_marginHorizontal="4dp"/>
-
-            <TextView
-                android:id="@+id/stat4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minWidth="0dp"
-                android:minHeight="48dp"
-                android:gravity="center"
-                android:background="@color/surface_white"
-                android:padding="12dp"
-                android:fontFamily="@font/convergence"
-                android:textSize="11sp"
-                android:textColor="@color/dark_green"
-                android:layout_marginStart="4dp"/>
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:layout_marginStart="4dp"
+                android:text="Weight —" />
         </LinearLayout>
 
         <TextView
@@ -168,10 +160,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/surface_white"
+            android:background="@color/surface_soft_alt"
             android:text="Personal details"
             android:fontFamily="@font/convergence"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_black"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:layout_marginBottom="4dp"/>
 
@@ -180,10 +172,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/surface_white"
+            android:background="@color/surface_soft_alt"
             android:text="Goals"
             android:fontFamily="@font/convergence"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_black"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:clickable="true"
             android:focusable="true"
@@ -194,10 +186,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/surface_white"
+            android:background="@color/surface_soft_alt"
             android:text="Dietary preferences"
             android:fontFamily="@font/convergence"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_black"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:layout_marginBottom="4dp"/>
 
@@ -206,10 +198,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/surface_white"
+            android:background="@color/surface_soft_alt"
             android:text="Saved foods"
             android:fontFamily="@font/convergence"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_black"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:layout_marginBottom="4dp"/>
 
@@ -218,10 +210,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/surface_white"
+            android:background="@color/surface_soft_alt"
             android:text="Progress"
             android:fontFamily="@font/convergence"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_black"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:layout_marginBottom="4dp"/>
 
@@ -230,10 +222,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/surface_white"
+            android:background="@color/surface_soft_alt"
             android:text="Reminders &amp; Notifications"
             android:fontFamily="@font/convergence"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_black"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:layout_marginBottom="4dp"/>
 
@@ -242,10 +234,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/surface_white"
+            android:background="@color/surface_soft_alt"
             android:text="Sync to device"
             android:fontFamily="@font/convergence"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_black"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:layout_marginBottom="4dp"/>
 
@@ -254,10 +246,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/surface_white"
+            android:background="@color/surface_soft_alt"
             android:text="Privacy"
             android:fontFamily="@font/convergence"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_black"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:layout_marginBottom="4dp"/>
 
@@ -266,10 +258,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/surface_white"
+            android:background="@color/surface_soft_alt"
             android:text="History"
             android:fontFamily="@font/convergence"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_black"
             android:drawableEnd="@drawable/ic_arrow_right"/>
     </LinearLayout>
 </ScrollView>

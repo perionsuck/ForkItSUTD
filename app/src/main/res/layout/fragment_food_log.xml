@@ -40,7 +40,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:fontFamily="@font/antic_didone"
-        android:textColor="@color/dark_green"
+        android:textColor="@color/text_black"
         android:layout_marginBottom="12dp"/>
 
     <LinearLayout
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:text="Sort by"
             android:textSize="13sp"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/text_muted"
             android:layout_marginBottom="4dp"/>
 
         <Spinner
@@ -62,8 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:minWidth="200dp"
-            android:background="@color/surface_white"
-            android:popupBackground="@color/surface_white"/>
+            android:background="@color/surface_soft"
+            android:popupBackground="@color/surface_soft"/>
     </LinearLayout>
 
     <FrameLayout

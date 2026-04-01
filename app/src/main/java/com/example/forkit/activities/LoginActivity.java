@@ -32,6 +32,14 @@ public class LoginActivity extends AppCompatActivity {
     //    TODO: Don't hardcode your keys lmao
     private static final String TAG = "Supabase";
     private static final String SUPABASE_URL = "https://fbbfaymfxetiwgfkrkxw.supabase.co";
+    private static final String[] USER_SCOPED_KEYS = new String[]{
+            "user_name", "user_handle", "weight_kg", "age", "height_cm", "goal_weight_kg",
+            "activity_level", "is_male", "steps_today", "exercise_mins",
+            "water_goal_ml", "dietary_prefs", "profile_pic_uri",
+            "reminders_enabled", "reminder_times",
+            "calorie_goal", "protein_goal", "carbs_goal", "fat_goal",
+            "calories_burned", "streak", "last_log_date"
+    };
 
     public static final String ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZiYmZheW1meGV0aXdnZmtya3h3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTYxNTksImV4cCI6MjA4ODYzMjE1OX0.tIuYcHqTrmfxxiVPG8DFSETPf6TxK6Odwsvl9Ag1ukg";
 
@@ -180,11 +188,16 @@ public class LoginActivity extends AppCompatActivity {
 
             // Save token and user ID to SharedPreferences
             SharedPreferences prefs = getSharedPreferences("forkit_prefs", MODE_PRIVATE);
-            prefs.edit()
-                    .putString("access_token", accessToken)
-                    .putString("user_id", userId)
-                    .putBoolean("is_new_user", isNewUser)
-                    .apply();
+            SharedPreferences.Editor editor = prefs.edit();
+            clearActiveProfileKeys(editor);
+            editor.putString("access_token", accessToken);
+            editor.putString("user_id", userId);
+            editor.putBoolean("is_new_user", isNewUser);
+            editor.apply();
+
+            if (!isNewUser) {
+                restoreUserScopedCache(prefs, userId);
+            }
 
             runOnUiThread(() -> {
                 if (isNewUser) {
@@ -209,5 +222,44 @@ public class LoginActivity extends AppCompatActivity {
             btnSubmit.setText(isLoginMode ? "Log In" : "Sign Up");
             Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
         });
+    }
+
+    private void clearActiveProfileKeys(SharedPreferences.Editor editor) {
+        for (String key : USER_SCOPED_KEYS) editor.remove(key);
+        for (int i = 0; i < 7; i++) editor.remove("water_" + i);
+    }
+
+    private void restoreUserScopedCache(SharedPreferences prefs, String userId) {
+        if (userId == null || userId.isEmpty()) return;
+        String prefix = "usercache_" + userId + "_";
+        if (!prefs.getBoolean(prefix + "__exists", false)) return;
+
+        SharedPreferences.Editor editor = prefs.edit();
+        for (String key : USER_SCOPED_KEYS) {
+            copyKeyFromScopedCache(prefs, editor, prefix + key, key);
+        }
+        for (int i = 0; i < 7; i++) {
+            copyKeyFromScopedCache(prefs, editor, prefix + "water_" + i, "water_" + i);
+        }
+        editor.apply();
+    }
+
+    private void copyKeyFromScopedCache(SharedPreferences prefs, SharedPreferences.Editor editor, String fromKey, String toKey) {
+        Object value = prefs.getAll().get(fromKey);
+        if (value == null) {
+            editor.remove(toKey);
+        } else if (value instanceof String) {
+            editor.putString(toKey, (String) value);
+        } else if (value instanceof Integer) {
+            editor.putInt(toKey, (Integer) value);
+        } else if (value instanceof Float) {
+            editor.putFloat(toKey, (Float) value);
+        } else if (value instanceof Boolean) {
+            editor.putBoolean(toKey, (Boolean) value);
+        } else if (value instanceof Long) {
+            editor.putLong(toKey, (Long) value);
+        } else {
+            editor.putString(toKey, String.valueOf(value));
+        }
     }
 }

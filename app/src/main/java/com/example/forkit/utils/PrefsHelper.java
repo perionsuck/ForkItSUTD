@@ -146,6 +146,30 @@ public class PrefsHelper {
         prefs.edit().putFloat(KEY_GOAL_WEIGHT, f).apply();
     }
 
+    public boolean hasAge() {
+        return prefs.contains(KEY_AGE);
+    }
+
+    public boolean hasHeightCm() {
+        return prefs.contains(KEY_HEIGHT_CM);
+    }
+
+    public boolean hasWeight() {
+        return prefs.contains(KEY_WEIGHT);
+    }
+
+    public boolean hasGoalWeight() {
+        return prefs.contains(KEY_GOAL_WEIGHT);
+    }
+
+    public boolean hasGender() {
+        return prefs.contains(KEY_IS_MALE);
+    }
+
+    public boolean hasActivityLevel() {
+        return prefs.contains(KEY_ACTIVITY_LEVEL);
+    }
+
     public int getActivityLevel() {
         return prefs.getInt(KEY_ACTIVITY_LEVEL, 1);
     }

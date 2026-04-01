@@ -24,6 +24,8 @@ import com.example.forkit.models.FoodEntry;
 import com.example.forkit.utils.ApiClient;
 import com.example.forkit.utils.CaloriesNinjaApi;
 import com.example.forkit.utils.PrefsHelper;
+import com.example.forkit.utils.SupabaseApi;
+import com.example.forkit.utils.SupabaseClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +55,11 @@ public class SearchFragment extends Fragment {
             if (etSearch != null) etSearch.setHintTextColor(0xFF000000);
             if (rvResults == null) return;
             adapter = new SearchResultAdapter(new ArrayList<>(), item -> showMealTypePicker((mealType) -> {
-                HomeFragment.foodEntries.add(new FoodEntry(
+                FoodEntry entry = new FoodEntry(
                         item.name, (int) item.calories,
                         (float) item.protein_g, (float) item.carbohydrates_total_g, (float) item.fat_total_g,
-                        mealType));
+                        mealType);
+                addEntryAndSync(entry);
                 if (getContext() != null) new PrefsHelper(getContext()).onFoodLogged();
                 if (getContext() != null) Toast.makeText(getContext(), item.name + " added", Toast.LENGTH_SHORT).show();
             }));
@@ -132,12 +135,35 @@ public class SearchFragment extends Fragment {
             float fat = parseFloat(etFat != null ? etFat.getText() : null, 0f);
             String mealType = "Lunch";
             if (spinnerMeal != null && spinnerMeal.getSelectedItem() != null) mealType = spinnerMeal.getSelectedItem().toString();
-            HomeFragment.foodEntries.add(new FoodEntry(name, cal, protein, carbs, fat, mealType));
+            addEntryAndSync(new FoodEntry(name, cal, protein, carbs, fat, mealType));
             new PrefsHelper(requireContext()).onFoodLogged();
             Toast.makeText(requireContext(), name + " added", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
         dialog.show();
+    }
+
+    private void addEntryAndSync(FoodEntry entry) {
+        HomeFragment.foodEntries.add(entry);
+        if (getContext() == null) return;
+
+        PrefsHelper prefs = new PrefsHelper(getContext());
+        String userId = prefs.getUserId();
+        if (userId == null || userId.isEmpty()) return;
+
+        entry.setUserId(userId);
+        SupabaseApi api = SupabaseClient.getClient().create(SupabaseApi.class);
+        api.insertFoodEntry(entry).enqueue(new Callback<List<FoodEntry>>() {
+            @Override
+            public void onResponse(Call<List<FoodEntry>> call, Response<List<FoodEntry>> response) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    entry.setId(response.body().get(0).getId());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FoodEntry>> call, Throwable t) {}
+        });
     }
 
     private void showMealTypePicker(java.util.function.Consumer<String> onSelected) {

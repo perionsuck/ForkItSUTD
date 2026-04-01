@@ -13,7 +13,8 @@ public interface SupabaseApi {
     @GET("food_entries")
     Call<List<FoodEntry>> getFoodEntries(
             @Query("order") String order,         // e.g. "timestamp.desc"
-            @Query("select") String select        // e.g. "*"
+            @Query("select") String select,       // e.g. "*"
+            @Query("user_id") String userIdFilter // e.g. "eq.<uuid>"
     );
 
     @POST("food_entries")
@@ -24,7 +25,10 @@ public interface SupabaseApi {
 
     // --- UserGoals ---
     @GET("user_goals")
-    Call<List<UserGoals>> getUserGoals(@Query("select") String select);
+    Call<List<UserGoals>> getUserGoals(
+            @Query("select") String select,
+            @Query("id") String idFilter
+    );
 
     @POST("user_goals")
     Call<List<UserGoals>> insertUserGoals(@Body UserGoals goals);

@@ -18,7 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.forkit.MainActivity;
 import com.example.forkit.R;
 import com.example.forkit.adapters.FoodLogAdapter;
+import com.example.forkit.models.FoodEntry;
 import com.example.forkit.utils.FoodSorter;
+import com.example.forkit.utils.SupabaseApi;
+import com.example.forkit.utils.SupabaseClient;
 
 public class FoodLogFragment extends Fragment {
 
@@ -45,6 +48,7 @@ public class FoodLogFragment extends Fragment {
 
         adapter = new FoodLogAdapter(entry -> {
             HomeFragment.foodEntries.remove(entry);
+            deleteFromCloud(entry);
             updateEntries();
         });
         adapter.setOnItemClickListener(entry -> {
@@ -96,6 +100,17 @@ public class FoodLogFragment extends Fragment {
         if (tvEmptyLog != null) {
             tvEmptyLog.setVisibility(HomeFragment.foodEntries.isEmpty() ? View.VISIBLE : View.GONE);
         }
+    }
+
+    private void deleteFromCloud(FoodEntry entry) {
+        if (entry == null || entry.getId() <= 0) return;
+        SupabaseApi api = SupabaseClient.getClient().create(SupabaseApi.class);
+        api.deleteFoodEntry("eq." + entry.getId()).enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(retrofit2.Call<Void> call, retrofit2.Response<Void> response) {}
+            @Override
+            public void onFailure(retrofit2.Call<Void> call, Throwable t) {}
+        });
     }
 
     @Override
