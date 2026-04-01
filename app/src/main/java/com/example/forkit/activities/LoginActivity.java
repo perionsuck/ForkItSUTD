@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.forkit.MainActivity;
 import com.example.forkit.R;
+import com.example.forkit.utils.PrefsHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -191,6 +192,10 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = prefs.edit();
             clearActiveProfileKeys(editor);
             editor.putString("access_token", accessToken);
+            String refreshToken = json.optString("refresh_token", "");
+            if (!refreshToken.isEmpty()) {
+                editor.putString(PrefsHelper.KEY_REFRESH_TOKEN, refreshToken);
+            }
             editor.putString("user_id", userId);
             editor.putBoolean("is_new_user", isNewUser);
             editor.apply();

@@ -212,12 +212,22 @@ public class RecommendationsFragment extends Fragment {
         if (userId == null || userId.isEmpty()) return;
 
         entry.setUserId(userId);
+        entry.setUserAdded(true);
+        String token = prefs.getAccessToken();
+        if (token != null && !token.isEmpty()) {
+            SupabaseClient.setAccessToken(token);
+        }
         SupabaseApi api = SupabaseClient.getClient().create(SupabaseApi.class);
         api.insertFoodEntry(entry).enqueue(new Callback<List<FoodEntry>>() {
             @Override
             public void onResponse(Call<List<FoodEntry>> call, Response<List<FoodEntry>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    entry.setId(response.body().get(0).getId());
+                if (response.isSuccessful()) {
+                    if (response.body() != null && !response.body().isEmpty()) {
+                        entry.setId(response.body().get(0).getId());
+                    }
+                    if (getActivity() instanceof MainActivity) {
+                        ((MainActivity) getActivity()).refreshFoodEntriesFromCloud();
+                    }
                 }
             }
 

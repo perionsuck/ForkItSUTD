@@ -217,7 +217,7 @@ public class HomeFragment extends Fragment {
         int cPct = cGoal > 0 ? Math.min((int) (totalCarbs / cGoal * 100), 100) : 0;
         int fPct = fGoal > 0 ? Math.min((int) (totalFat / fGoal * 100), 100) : 0;
 
-        tvCalLeft.setText(String.valueOf(calLeft));
+        tvCalLeft.setText(String.valueOf(calLeft>=0 ? calLeft : 0));
         tvCalConsumed.setText(String.valueOf(totalCalIn));
         tvCalBurned.setText(String.valueOf(calBurned));
         progressProtein.setProgress(pPct);

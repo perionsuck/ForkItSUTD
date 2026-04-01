@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        SupabaseClient.initApplicationContext(this);
         SupabaseClient.setAccessToken(accessToken);
         setContentView(R.layout.activity_main);
 
@@ -184,6 +185,8 @@ public class MainActivity extends AppCompatActivity {
                         Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                         if (current instanceof HomeFragment) {
                             ((HomeFragment) current).updateDashboard();
+                        } else if (current instanceof FoodLogFragment) {
+                            ((FoodLogFragment) current).refreshList();
                         }
                     });
                 } else {
@@ -196,6 +199,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Supabase", "Failed to fetch food entries: " + t.getMessage());
             }
         });
+    }
+
+    /**
+     * Reload food entries from Supabase after a local insert (or when UI may be stale).
+     */
+    public void refreshFoodEntriesFromCloud() {
+        SharedPreferences prefs = getSharedPreferences("forkit_prefs", MODE_PRIVATE);
+        fetchFoodEntries(prefs.getString("user_id", ""));
     }
 
     public void openDrawer() {
@@ -223,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
         clearActiveProfileKeys(editor);
         editor
                 .remove("access_token")
+                .remove(PrefsHelper.KEY_REFRESH_TOKEN)
                 .remove("user_id")
                 .remove("is_new_user")
                 .apply();

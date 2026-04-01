@@ -47,12 +47,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="scan meal"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
             android:fontFamily="@font/antic_didone"
+            android:text="Scan meal"
             android:textColor="@color/dark_green"
-            android:layout_marginBottom="4dp"/>
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,6 +104,16 @@
             app:cornerRadius="12dp"
             android:layout_marginStart="8dp"/>
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_custom_food"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="+ Add custom food"
+            android:textSize="15sp"
+            android:textColor="@color/text_black"
+            app:backgroundTint="@color/dark_green"
+            app:cornerRadius="12dp"/>
 
     </LinearLayout>
 </ScrollView>

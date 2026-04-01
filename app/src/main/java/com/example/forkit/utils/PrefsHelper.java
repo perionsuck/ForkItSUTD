@@ -32,6 +32,7 @@ public class PrefsHelper {
     private static final String KEY_FAT_GOAL = "fat_goal";
     private static final String KEY_CALORIES_BURNED = "calories_burned";
     private static final String KEY_ACCESS_TOKEN = "access_token";
+    public static final String KEY_REFRESH_TOKEN = "refresh_token";
     private static final String KEY_USER_ID = "user_id";
     private static final int DEFAULT_WATER_GOAL = 2000;
 

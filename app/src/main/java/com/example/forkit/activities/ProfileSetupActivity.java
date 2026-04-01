@@ -38,10 +38,15 @@ public class ProfileSetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_setup);
 
-        supabaseApi = SupabaseClient.getClient().create(SupabaseApi.class);
-
         SharedPreferences prefs = getSharedPreferences("forkit_prefs", MODE_PRIVATE);
+        SupabaseClient.initApplicationContext(this);
+        String accessToken = prefs.getString("access_token", null);
+        if (accessToken != null) {
+            SupabaseClient.setAccessToken(accessToken);
+        }
         userId = prefs.getString("user_id", "");
+
+        supabaseApi = SupabaseClient.getClient().create(SupabaseApi.class);
 
         etName = findViewById(R.id.et_name);
         etAge = findViewById(R.id.et_age);

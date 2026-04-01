@@ -23,9 +23,8 @@ import com.example.forkit.adapters.SearchResultAdapter;
 import com.example.forkit.models.FoodEntry;
 import com.example.forkit.utils.ApiClient;
 import com.example.forkit.utils.CaloriesNinjaApi;
+import com.example.forkit.utils.CustomFoodHelper;
 import com.example.forkit.utils.PrefsHelper;
-import com.example.forkit.utils.SupabaseApi;
-import com.example.forkit.utils.SupabaseClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +58,7 @@ public class SearchFragment extends Fragment {
                         item.name, (int) item.calories,
                         (float) item.protein_g, (float) item.carbohydrates_total_g, (float) item.fat_total_g,
                         mealType);
-                addEntryAndSync(entry);
+                CustomFoodHelper.addFoodEntryAndSync(SearchFragment.this, entry);
                 if (getContext() != null) new PrefsHelper(getContext()).onFoodLogged();
                 if (getContext() != null) Toast.makeText(getContext(), item.name + " added", Toast.LENGTH_SHORT).show();
             }));
@@ -92,78 +91,10 @@ public class SearchFragment extends Fragment {
             });
 
             View btnCustom = view.findViewById(R.id.btn_add_custom);
-            if (btnCustom != null) btnCustom.setOnClickListener(v -> showCustomFoodDialog());
+            if (btnCustom != null) btnCustom.setOnClickListener(v -> CustomFoodHelper.show(SearchFragment.this));
         } catch (Exception e) {
             if (getContext() != null) Toast.makeText(getContext(), "Error loading search", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void showCustomFoodDialog() {
-        if (getContext() == null) return;
-        View dialogView = LayoutInflater.from(new android.view.ContextThemeWrapper(getContext(), R.style.AlertDialogLight)).inflate(R.layout.dialog_custom_food, null);
-        EditText etName = dialogView.findViewById(R.id.et_custom_name);
-        EditText etDesc = dialogView.findViewById(R.id.et_custom_description);
-        EditText etCal = dialogView.findViewById(R.id.et_custom_calories);
-        EditText etProtein = dialogView.findViewById(R.id.et_custom_protein);
-        EditText etCarbs = dialogView.findViewById(R.id.et_custom_carbs);
-        EditText etFat = dialogView.findViewById(R.id.et_custom_fat);
-        if (etName == null || etCal == null) return;
-
-        AlertDialog dialog = new AlertDialog.Builder(getContext(), R.style.AlertDialogLight)
-                .setView(dialogView)
-                .create();
-
-        android.widget.Spinner spinnerMeal = dialogView.findViewById(R.id.spinner_meal_type);
-        if (spinnerMeal != null) {
-            String[] meals = {"Breakfast", "Lunch", "Dinner", "Tea", "Snack"};
-            android.widget.ArrayAdapter<String> mealAdapter = new android.widget.ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, meals);
-            mealAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerMeal.setAdapter(mealAdapter);
-        }
-
-        dialogView.findViewById(R.id.btn_save_custom).setOnClickListener(v -> {
-            String name = etName.getText() != null ? etName.getText().toString().trim() : "";
-            if (name.isEmpty()) {
-                Toast.makeText(requireContext(), "Enter food name", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String desc = etDesc != null && etDesc.getText() != null ? etDesc.getText().toString().trim() : "";
-            if (!desc.isEmpty()) name = name + " - " + desc;
-            int cal = parseInt(etCal != null ? etCal.getText() : null, 0);
-            float protein = parseFloat(etProtein != null ? etProtein.getText() : null, 0f);
-            float carbs = parseFloat(etCarbs != null ? etCarbs.getText() : null, 0f);
-            float fat = parseFloat(etFat != null ? etFat.getText() : null, 0f);
-            String mealType = "Lunch";
-            if (spinnerMeal != null && spinnerMeal.getSelectedItem() != null) mealType = spinnerMeal.getSelectedItem().toString();
-            addEntryAndSync(new FoodEntry(name, cal, protein, carbs, fat, mealType));
-            new PrefsHelper(requireContext()).onFoodLogged();
-            Toast.makeText(requireContext(), name + " added", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
-
-    private void addEntryAndSync(FoodEntry entry) {
-        HomeFragment.foodEntries.add(entry);
-        if (getContext() == null) return;
-
-        PrefsHelper prefs = new PrefsHelper(getContext());
-        String userId = prefs.getUserId();
-        if (userId == null || userId.isEmpty()) return;
-
-        entry.setUserId(userId);
-        SupabaseApi api = SupabaseClient.getClient().create(SupabaseApi.class);
-        api.insertFoodEntry(entry).enqueue(new Callback<List<FoodEntry>>() {
-            @Override
-            public void onResponse(Call<List<FoodEntry>> call, Response<List<FoodEntry>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    entry.setId(response.body().get(0).getId());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<FoodEntry>> call, Throwable t) {}
-        });
     }
 
     private void showMealTypePicker(java.util.function.Consumer<String> onSelected) {
@@ -176,15 +107,6 @@ public class SearchFragment extends Fragment {
             v.findViewById(id).setOnClickListener(x -> { d.dismiss(); onSelected.accept(meal); });
         }
         d.show();
-    }
-
-    private int parseInt(Editable e, int def) {
-        if (e == null || e.length() == 0) return def;
-        try { return Integer.parseInt(e.toString()); } catch (NumberFormatException ex) { return def; }
-    }
-    private float parseFloat(Editable e, float def) {
-        if (e == null || e.length() == 0) return def;
-        try { return Float.parseFloat(e.toString()); } catch (NumberFormatException ex) { return def; }
     }
 
     private void search(String query) {

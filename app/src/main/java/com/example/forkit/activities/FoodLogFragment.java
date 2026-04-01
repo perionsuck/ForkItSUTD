@@ -19,6 +19,7 @@ import com.example.forkit.MainActivity;
 import com.example.forkit.R;
 import com.example.forkit.adapters.FoodLogAdapter;
 import com.example.forkit.models.FoodEntry;
+import com.example.forkit.utils.CustomFoodHelper;
 import com.example.forkit.utils.FoodSorter;
 import com.example.forkit.utils.SupabaseApi;
 import com.example.forkit.utils.SupabaseClient;
@@ -100,6 +101,10 @@ public class FoodLogFragment extends Fragment {
         if (tvEmptyLog != null) {
             tvEmptyLog.setVisibility(HomeFragment.foodEntries.isEmpty() ? View.VISIBLE : View.GONE);
         }
+    }
+
+    public void refreshList() {
+        if (adapter != null) updateEntries();
     }
 
     private void deleteFromCloud(FoodEntry entry) {
