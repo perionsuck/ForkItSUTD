@@ -76,8 +76,8 @@
         android:id="@+id/btn_save_macros"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:text="Save"
-        android:textColor="@color/text_black"
+        android:text="SAVE"
+        android:textColor="@color/surface_white"
         android:textSize="15sp"
         app:backgroundTint="@color/dark_green"
         app:cornerRadius="12dp"/>

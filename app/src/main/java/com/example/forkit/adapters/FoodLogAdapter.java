@@ -19,7 +19,8 @@ import java.util.List;
 public class FoodLogAdapter extends RecyclerView.Adapter<FoodLogAdapter.ViewHolder> {
 
     private List<FoodEntry> entries = new ArrayList<>();
-    private FoodSorter.SortBy currentSort = FoodSorter.SortBy.TIME_NEWEST;
+    // Default to highest calories so newly-logged entries appear in "highest first" order.
+    private FoodSorter.SortBy currentSort = FoodSorter.SortBy.CALORIES_HIGH;
     private OnDeleteClickListener deleteListener;
     private OnItemClickListener itemClickListener;
 

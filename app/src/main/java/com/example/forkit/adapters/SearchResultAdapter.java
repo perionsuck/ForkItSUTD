@@ -17,15 +17,21 @@ import java.util.List;
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.VH> {
 
     private List<CaloriesNinjaApi.NutritionItem> items;
-    private final OnAddListener listener;
+    private final OnAddListener addListener;
+    private final OnSaveListener saveListener;
 
     public interface OnAddListener {
         void onAdd(CaloriesNinjaApi.NutritionItem item);
     }
 
-    public SearchResultAdapter(List<CaloriesNinjaApi.NutritionItem> items, OnAddListener listener) {
+    public interface OnSaveListener {
+        void onSave(CaloriesNinjaApi.NutritionItem item);
+    }
+
+    public SearchResultAdapter(List<CaloriesNinjaApi.NutritionItem> items, OnAddListener addListener, OnSaveListener saveListener) {
         this.items = items;
-        this.listener = listener;
+        this.addListener = addListener;
+        this.saveListener = saveListener;
     }
 
     public void update(List<CaloriesNinjaApi.NutritionItem> items) {
@@ -43,9 +49,14 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     public void onBindViewHolder(@NonNull VH h, int pos) {
         CaloriesNinjaApi.NutritionItem i = items.get(pos);
         h.name.setText(cap(i.name));
-        h.macros.setText(String.format("P %.0fg C %.0fg F %.0fg", i.protein_g, i.carbohydrates_total_g, i.fat_total_g));
-        h.kcal.setText((int) i.calories + " kcal");
-        h.add.setOnClickListener(v -> listener.onAdd(i));
+        h.macros.setText(String.format("P %.0fg C %.0fg F %.0fg", i.proteinVal(), i.carbsVal(), i.fatVal()));
+        h.kcal.setText((int) i.caloriesVal() + " kcal");
+        h.add.setOnClickListener(v -> addListener.onAdd(i));
+        if (h.save != null) {
+            h.save.setOnClickListener(v -> {
+                if (saveListener != null) saveListener.onSave(i);
+            });
+        }
     }
 
     @Override
@@ -60,7 +71,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     static class VH extends RecyclerView.ViewHolder {
         TextView name, macros, kcal;
-        ImageView add;
+        ImageView add, save;
 
         VH(@NonNull View v) {
             super(v);
@@ -68,6 +79,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             macros = v.findViewById(R.id.tv_food_macros);
             kcal = v.findViewById(R.id.tv_food_kcal);
             add = v.findViewById(R.id.btn_add_food);
+            save = v.findViewById(R.id.btn_save_food);
         }
     }
 }

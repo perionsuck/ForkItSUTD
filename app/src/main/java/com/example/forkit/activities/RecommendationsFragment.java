@@ -16,6 +16,7 @@ import com.example.forkit.R;
 import com.example.forkit.models.FoodEntry;
 import com.example.forkit.utils.PrefsHelper;
 import com.example.forkit.utils.DateUtils;
+import com.example.forkit.utils.FoodStore;
 import com.example.forkit.utils.SupabaseApi;
 import com.example.forkit.utils.SupabaseClient;
 import com.google.android.material.chip.Chip;
@@ -204,7 +205,7 @@ public class RecommendationsFragment extends Fragment {
     }
 
     private void addEntryAndSync(FoodEntry entry) {
-        HomeFragment.foodEntries.add(entry);
+        FoodStore.add(entry);
         if (getContext() == null) return;
 
         PrefsHelper prefs = new PrefsHelper(getContext());

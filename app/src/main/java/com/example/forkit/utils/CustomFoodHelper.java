@@ -13,6 +13,7 @@ import com.example.forkit.MainActivity;
 import com.example.forkit.R;
 import com.example.forkit.activities.HomeFragment;
 import com.example.forkit.models.FoodEntry;
+import com.example.forkit.utils.FoodStore;
 
 import java.util.List;
 
@@ -74,7 +75,7 @@ public final class CustomFoodHelper {
     }
 
     public static void addFoodEntryAndSync(Fragment fragment, FoodEntry entry) {
-        HomeFragment.foodEntries.add(entry);
+        FoodStore.add(entry);
         if (fragment.getContext() == null) return;
 
         PrefsHelper prefs = new PrefsHelper(fragment.getContext());

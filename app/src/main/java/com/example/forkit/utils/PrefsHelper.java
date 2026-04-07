@@ -11,6 +11,7 @@ public class PrefsHelper {
     private static final String KEY_STREAK = "streak";
     private static final String KEY_LAST_LOG_DATE = "last_log_date";
     private static final String KEY_WATER_PREFIX = "water_";
+    private static final String KEY_WATER_DATE_PREFIX = "waterdate_";
     private static final String KEY_USER_NAME = "user_name";
     private static final String KEY_USER_HANDLE = "user_handle";
     private static final String KEY_WEIGHT = "weight_kg";
@@ -89,6 +90,27 @@ public class PrefsHelper {
 
     public void addWaterForDay(int dayIndex, int ml) {
         setWaterForDay(dayIndex, getWaterForDay(dayIndex) + ml);
+    }
+
+    // ---- Date-keyed water history (for History screen) ----
+    public int getWaterForDateKey(String key) {
+        if (key == null) return 0;
+        return prefs.getInt(KEY_WATER_DATE_PREFIX + key, 0);
+    }
+
+    public void setWaterForDateKey(String key, int ml) {
+        if (key == null) return;
+        prefs.edit().putInt(KEY_WATER_DATE_PREFIX + key, Math.max(0, ml)).apply();
+    }
+
+    public void addWaterForToday(int ml) {
+        String key = getTodayKeySG();
+        setWaterForDateKey(key, getWaterForDateKey(key) + Math.max(0, ml));
+    }
+
+    public String getTodayKeySG() {
+        Calendar c = Calendar.getInstance(java.util.TimeZone.getTimeZone("Asia/Singapore"));
+        return c.get(Calendar.YEAR) + "-" + c.get(Calendar.DAY_OF_YEAR);
     }
 
     public int getWaterGoalMl() {

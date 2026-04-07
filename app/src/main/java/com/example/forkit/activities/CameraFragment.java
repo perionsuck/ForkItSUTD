@@ -36,6 +36,7 @@ import com.example.forkit.utils.CustomFoodHelper;
 import com.example.forkit.utils.GeminiApi;
 import com.example.forkit.utils.GeminiClient;
 import com.example.forkit.utils.GeminiNutritionResult;
+import com.example.forkit.utils.FoodStore;
 import com.example.forkit.utils.PrefsHelper;
 import com.example.forkit.utils.SupabaseApi;
 import com.example.forkit.utils.SupabaseClient;
@@ -475,7 +476,7 @@ public class CameraFragment extends Fragment {
     }
 
     private void addEntryAndSync(FoodEntry entry) {
-        HomeFragment.foodEntries.add(entry);
+        FoodStore.add(entry);
         PrefsHelper prefs = new PrefsHelper(requireContext());
         String userId = prefs.getUserId();
         if (userId == null || userId.isEmpty()) {

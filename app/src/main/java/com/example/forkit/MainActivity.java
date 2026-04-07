@@ -20,6 +20,7 @@ import com.example.forkit.activities.SearchFragment;
 import com.example.forkit.activities.SettingsFragment;
 import com.example.forkit.models.FoodEntry;
 import com.example.forkit.models.UserGoals;
+import com.example.forkit.utils.FoodStore;
 import com.example.forkit.utils.PrefsHelper;
 import com.example.forkit.utils.SupabaseApi;
 import com.example.forkit.utils.SupabaseClient;
@@ -177,8 +178,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<FoodEntry>> call, Response<List<FoodEntry>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    HomeFragment.foodEntries.clear();
-                    HomeFragment.foodEntries.addAll(response.body());
+                    FoodStore.setAll(response.body());
                     Log.d("Supabase", "Food entries loaded: " + response.body().size());
 
                     runOnUiThread(() -> {
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout() {
         // Clear in-memory session data to prevent carryover after relogin.
-        HomeFragment.foodEntries.clear();
+        FoodStore.setAll(null);
         HomeFragment.userGoals = new UserGoals();
 
         SharedPreferences prefs = getSharedPreferences("forkit_prefs", MODE_PRIVATE);
