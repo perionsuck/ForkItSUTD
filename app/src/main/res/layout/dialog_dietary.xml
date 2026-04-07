@@ -92,7 +92,7 @@
         android:id="@+id/btn_save_dietary"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:text="Save"
+        android:text="SAVE"
         android:textColor="@color/surface_white"
         android:textSize="15sp"
         app:backgroundTint="@color/dark_green"

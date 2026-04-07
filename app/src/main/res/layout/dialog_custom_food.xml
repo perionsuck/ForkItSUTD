@@ -137,7 +137,7 @@
         android:id="@+id/btn_save_custom"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:text="Add to log"
+        android:text="ADD TO LOG"
         android:textColor="@color/surface_white"
         android:textSize="15sp"
         app:backgroundTint="@color/dark_green"
