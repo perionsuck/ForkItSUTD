@@ -22,6 +22,8 @@ import com.example.forkit.MainActivity;
 import com.example.forkit.R;
 import com.example.forkit.models.FoodEntry;
 import com.example.forkit.models.UserGoals;
+import com.example.forkit.utils.FoodAnalytics;
+import com.example.forkit.utils.FoodStore;
 import com.example.forkit.utils.PrefsHelper;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
@@ -36,11 +38,13 @@ public class HomeFragment extends Fragment {
     private LinearProgressIndicator progressProtein, progressCarbs, progressFat;
     private TextView tvProtein, tvCarbs, tvFat;
     private TextView tvStreak, tvHeartRate;
+    private TextView tvPeakDay, tvPeakKcal, tvTopMeal, tvTopMealKcal;
     private View statsCollapsible;
     private ImageView ivStatsArrow;
     private View[] waterBars;
     private PrefsHelper prefs;
 
+    // Logged foods are stored in FoodStore; keep static list only for backward compatibility.
     public static List<FoodEntry> foodEntries = new ArrayList<>();
     public static UserGoals userGoals = new UserGoals();
 
@@ -67,6 +71,10 @@ public class HomeFragment extends Fragment {
         tvFat = view.findViewById(R.id.tv_fat_val);
         tvStreak = view.findViewById(R.id.tv_streak);
         tvHeartRate = view.findViewById(R.id.tv_heart_rate);
+        tvPeakDay = view.findViewById(R.id.tv_peak_day);
+        tvPeakKcal = view.findViewById(R.id.tv_peak_kcal);
+        tvTopMeal = view.findViewById(R.id.tv_top_meal);
+        tvTopMealKcal = view.findViewById(R.id.tv_top_meal_kcal);
         statsCollapsible = view.findViewById(R.id.stats_collapsible);
         ivStatsArrow = view.findViewById(R.id.iv_stats_arrow);
 
@@ -120,6 +128,7 @@ public class HomeFragment extends Fragment {
                     int ml = Integer.parseInt(s);
                     if (ml > 0) {
                         prefs.addWaterForDay(getDayIndex(), ml);
+                        prefs.addWaterForToday(ml);
                         updateWaterBars();
                     }
                 }
@@ -197,7 +206,8 @@ public class HomeFragment extends Fragment {
         int totalCalIn = 0;
         float totalProtein = 0, totalCarbs = 0, totalFat = 0;
 
-        for (FoodEntry e : foodEntries) {
+        List<FoodEntry> list = FoodStore.getEntriesView();
+        for (FoodEntry e : list) {
             totalCalIn += e.getCalories();
             totalProtein += e.getProtein();
             totalCarbs += e.getCarbs();
@@ -217,7 +227,7 @@ public class HomeFragment extends Fragment {
         int cPct = cGoal > 0 ? Math.min((int) (totalCarbs / cGoal * 100), 100) : 0;
         int fPct = fGoal > 0 ? Math.min((int) (totalFat / fGoal * 100), 100) : 0;
 
-        tvCalLeft.setText(String.valueOf(calLeft));
+        tvCalLeft.setText(String.valueOf(calLeft>=0 ? calLeft : 0));
         tvCalConsumed.setText(String.valueOf(totalCalIn));
         tvCalBurned.setText(String.valueOf(calBurned));
         progressProtein.setProgress(pPct);
@@ -229,5 +239,21 @@ public class HomeFragment extends Fragment {
         tvStreak.setText(String.valueOf(prefs.getStreak()));
         tvHeartRate.setText(prefs.getExerciseMins() > 0 ? prefs.getExerciseMins() + " min" : "0");
         updateWaterBars();
+
+        // Weekly analysis: peak calorie day + highest calorie meal
+        FoodAnalytics.DayTotal peak = FoodStore.peekPeakDay();
+        if (tvPeakDay != null) {
+            tvPeakDay.setText("Peak: " + (peak != null ? FoodAnalytics.dayLabelMon0(peak.dayIndexMon0) : "—"));
+        }
+        if (tvPeakKcal != null) {
+            tvPeakKcal.setText((peak != null ? peak.calories : 0) + " kcal");
+        }
+        FoodEntry topMeal = FoodStore.peekTopMeal();
+        if (tvTopMeal != null) {
+            tvTopMeal.setText("Top meal: " + (topMeal != null ? topMeal.getFoodName() : "—"));
+        }
+        if (tvTopMealKcal != null) {
+            tvTopMealKcal.setText((topMeal != null ? topMeal.getCalories() : 0) + " kcal");
+        }
     }
 }

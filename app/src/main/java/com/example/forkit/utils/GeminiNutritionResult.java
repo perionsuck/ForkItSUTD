@@ -6,14 +6,22 @@ public class GeminiNutritionResult {
 
     public String name;
     public String ingredients;
+
+    @SerializedName(value = "calories", alternate = {"kcal", "calories_kcal", "energy_kcal"})
     public int calories;
-    @SerializedName("protein_g")
+
+    @SerializedName(value = "protein_g", alternate = {"protein", "proteinG", "protein_grams", "protein_g_total"})
     public float proteinG;
-    @SerializedName("carbs_g")
+
+    @SerializedName(value = "carbs_g", alternate = {"carbs", "carbohydrates_g", "carbohydrates", "carbsG", "carbs_grams", "carbs_g_total"})
     public float carbsG;
-    @SerializedName("fat_g")
+
+    @SerializedName(value = "fat_g", alternate = {"fat", "fatG", "fat_grams", "fat_g_total", "lipids_g"})
     public float fatG;
-    @SerializedName("portion_g")
+
+    @SerializedName(value = "portion_g", alternate = {"portion", "portionGrams", "portion_grams", "serving_g", "serving_grams"})
     public int portionG;
+
+    @SerializedName(value = "confidence", alternate = {"confidence_pct", "confidencePercent", "confidence_score"})
     public int confidence;
 }

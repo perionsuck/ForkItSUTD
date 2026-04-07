@@ -3,6 +3,8 @@ package com.example.forkit.utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import okhttp3.OkHttpClient;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -17,8 +19,14 @@ public class ApiClient {
     public static Retrofit getClient() {
         if (retrofit == null) {
             Gson gson = new GsonBuilder().setLenient().create();
+            OkHttpClient ok = new OkHttpClient.Builder()
+                    .connectTimeout(java.time.Duration.ofSeconds(12))
+                    .readTimeout(java.time.Duration.ofSeconds(12))
+                    .writeTimeout(java.time.Duration.ofSeconds(12))
+                    .build();
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+                    .client(ok)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }

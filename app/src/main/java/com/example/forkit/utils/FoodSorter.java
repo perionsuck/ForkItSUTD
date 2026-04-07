@@ -24,8 +24,12 @@ public class FoodSorter {
         switch (sortBy) {
             case CALORIES_HIGH:
             case CALORIES_LOW:
-                // MERGE SORT for calories
-                mergeSort(list, 0, list.size() - 1, sortBy);
+                // MAX/MIN HEAP for calories:
+                // - peek: O(1)
+                // - insert: O(log n)
+                // - extract: O(log n)
+                // - full sort via repeated extract: O(n log n)
+                list = heapSortByCalories(list, sortBy);
                 break;
             case NAME_AZ:
             case NAME_ZA:
@@ -42,6 +46,167 @@ public class FoodSorter {
                 break;
         }
         return list;
+    }
+
+    private static List<FoodEntry> heapSortByCalories(List<FoodEntry> entries, SortBy sortBy) {
+        if (entries == null || entries.size() <= 1) return entries;
+        if (sortBy == SortBy.CALORIES_HIGH) {
+            MaxHeap heap = MaxHeap.build(entries);
+            List<FoodEntry> out = new ArrayList<>(entries.size());
+            while (!heap.isEmpty()) out.add(heap.extractMax());
+            return out;
+        } else {
+            MinHeap heap = MinHeap.build(entries);
+            List<FoodEntry> out = new ArrayList<>(entries.size());
+            while (!heap.isEmpty()) out.add(heap.extractMin());
+            return out;
+        }
+    }
+
+    private static final class MaxHeap {
+        private final ArrayList<FoodEntry> a;
+
+        private MaxHeap(int capacity) { this.a = new ArrayList<>(capacity); }
+
+        static MaxHeap build(List<FoodEntry> items) {
+            MaxHeap h = new MaxHeap(items.size());
+            h.a.addAll(items);
+            // heapify O(n)
+            for (int i = (h.a.size() / 2) - 1; i >= 0; i--) h.siftDown(i);
+            return h;
+        }
+
+        boolean isEmpty() { return a.isEmpty(); }
+
+        FoodEntry peek() { return a.isEmpty() ? null : a.get(0); } // O(1)
+
+        void insert(FoodEntry e) { // O(log n)
+            a.add(e);
+            siftUp(a.size() - 1);
+        }
+
+        FoodEntry extractMax() { // O(log n)
+            if (a.isEmpty()) return null;
+            FoodEntry max = a.get(0);
+            FoodEntry last = a.remove(a.size() - 1);
+            if (!a.isEmpty()) {
+                a.set(0, last);
+                siftDown(0);
+            }
+            return max;
+        }
+
+        private void siftUp(int i) {
+            while (i > 0) {
+                int p = (i - 1) / 2;
+                if (compareCaloriesDesc(a.get(i), a.get(p)) <= 0) break;
+                swap(i, p);
+                i = p;
+            }
+        }
+
+        private void siftDown(int i) {
+            int n = a.size();
+            while (true) {
+                int l = i * 2 + 1;
+                int r = l + 1;
+                int best = i;
+                if (l < n && compareCaloriesDesc(a.get(l), a.get(best)) > 0) best = l;
+                if (r < n && compareCaloriesDesc(a.get(r), a.get(best)) > 0) best = r;
+                if (best == i) return;
+                swap(i, best);
+                i = best;
+            }
+        }
+
+        private void swap(int i, int j) {
+            FoodEntry t = a.get(i);
+            a.set(i, a.get(j));
+            a.set(j, t);
+        }
+    }
+
+    private static final class MinHeap {
+        private final ArrayList<FoodEntry> a;
+
+        private MinHeap(int capacity) { this.a = new ArrayList<>(capacity); }
+
+        static MinHeap build(List<FoodEntry> items) {
+            MinHeap h = new MinHeap(items.size());
+            h.a.addAll(items);
+            // heapify O(n)
+            for (int i = (h.a.size() / 2) - 1; i >= 0; i--) h.siftDown(i);
+            return h;
+        }
+
+        boolean isEmpty() { return a.isEmpty(); }
+
+        FoodEntry peek() { return a.isEmpty() ? null : a.get(0); } // O(1)
+
+        void insert(FoodEntry e) { // O(log n)
+            a.add(e);
+            siftUp(a.size() - 1);
+        }
+
+        FoodEntry extractMin() { // O(log n)
+            if (a.isEmpty()) return null;
+            FoodEntry min = a.get(0);
+            FoodEntry last = a.remove(a.size() - 1);
+            if (!a.isEmpty()) {
+                a.set(0, last);
+                siftDown(0);
+            }
+            return min;
+        }
+
+        private void siftUp(int i) {
+            while (i > 0) {
+                int p = (i - 1) / 2;
+                if (compareCaloriesAsc(a.get(i), a.get(p)) >= 0) break;
+                swap(i, p);
+                i = p;
+            }
+        }
+
+        private void siftDown(int i) {
+            int n = a.size();
+            while (true) {
+                int l = i * 2 + 1;
+                int r = l + 1;
+                int best = i;
+                if (l < n && compareCaloriesAsc(a.get(l), a.get(best)) < 0) best = l;
+                if (r < n && compareCaloriesAsc(a.get(r), a.get(best)) < 0) best = r;
+                if (best == i) return;
+                swap(i, best);
+                i = best;
+            }
+        }
+
+        private void swap(int i, int j) {
+            FoodEntry t = a.get(i);
+            a.set(i, a.get(j));
+            a.set(j, t);
+        }
+    }
+
+    /**
+     * Descending calories comparator used by max-heap.
+     * Ties broken by timestamp (newer first) for stable-ish behavior.
+     */
+    private static int compareCaloriesDesc(FoodEntry a, FoodEntry b) {
+        int c = Integer.compare(a.getCalories(), b.getCalories());
+        if (c != 0) return c;
+        return Long.compare(a.getTimestamp(), b.getTimestamp());
+    }
+
+    /**
+     * Ascending calories comparator used by min-heap.
+     * Ties broken by timestamp (older first).
+     */
+    private static int compareCaloriesAsc(FoodEntry a, FoodEntry b) {
+        int c = Integer.compare(a.getCalories(), b.getCalories());
+        if (c != 0) return c;
+        return Long.compare(a.getTimestamp(), b.getTimestamp());
     }
 
     // ── MERGE SORT O(n log n) stable ──

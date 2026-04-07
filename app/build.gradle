@@ -10,7 +10,7 @@ def geminiApiKey = localProperties.getProperty("GEMINI_API_KEY", "")
 
 android {
     namespace 'com.example.forkit'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.example.forkit"
@@ -60,6 +60,13 @@ dependencies {
     // Navigation
     implementation 'androidx.navigation:navigation-fragment:2.8.9'
     implementation 'androidx.navigation:navigation-ui:2.8.9'
+
+    // Health Connect (multi-device sync) + coroutines bridge
+    implementation 'androidx.health.connect:connect-client:1.1.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+
+    // WorkManager (reminders/notifications)
+    implementation 'androidx.work:work-runtime:2.11.2'
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="add"
-        android:textColor="@android:color/white"
+        android:textColor="@color/surface_white"
         app:backgroundTint="@color/dark_green"
         app:cornerRadius="12dp"/>
 </LinearLayout>

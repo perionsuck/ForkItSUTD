@@ -3,6 +3,8 @@
     <color name="bg_warm">#fbe8a8</color>
     <color name="dark_green">#314c1c</color>
     <color name="surface_white">#FFFFFF</color>
+    <color name="surface_soft">#F6E7BB</color>
+    <color name="surface_soft_alt">#F1DEAA</color>
     <color name="streak_orange">#FF6B35</color>
     <color name="water_blue">#7EC8E3</color>
     <color name="bg_dark">#0F0F0F</color>
@@ -16,4 +18,5 @@
     <color name="accent_red">#FF453A</color>
     <color name="divider">#2C2C2E</color>
     <color name="text_black">#000000</color>
+    <color name="text_muted">#5F5A48</color>
 </resources>

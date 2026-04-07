@@ -256,7 +256,7 @@
             android:text="Regenerate"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/surface_white"
             app:backgroundTint="@color/dark_green"
             app:cornerRadius="12dp"/>
     </LinearLayout>

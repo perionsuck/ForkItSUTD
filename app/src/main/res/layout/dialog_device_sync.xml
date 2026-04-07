@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/surface_white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sync to device"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/antic_didone"
+        android:textColor="@color/dark_green"
+        android:gravity="center"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Connect your devices to record your steps, active calories, and exercise minutes."
+        android:fontFamily="@font/convergence"
+        android:textSize="15sp"
+        android:textColor="@color/dark_green"
+        android:alpha="0.92"
+        android:layout_marginBottom="12dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_connect_sync"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Connect"
+        android:textAllCaps="false"
+        android:textColor="@color/surface_white"
+        app:backgroundTint="@color/dark_green"
+        app:cornerRadius="12dp"
+        android:layout_marginBottom="12dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/surface_white"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp">
+
+        <TextView
+            android:id="@+id/tv_sync_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:text="Not connected yet."
+            android:fontFamily="@font/convergence"
+            android:textSize="15sp"
+            android:textColor="@color/dark_green"/>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save_device_sync"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textColor="@color/surface_white"
+        app:backgroundTint="@color/dark_green"
+        app:cornerRadius="12dp"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>
+

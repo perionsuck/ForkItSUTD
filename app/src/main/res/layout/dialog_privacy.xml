@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Privacy"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/antic_didone"
+            android:textColor="@color/dark_green"
+            android:gravity="center"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What we store"
+            android:fontFamily="@font/convergence"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_green"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="- Food logs you add (synced to your account)\n- Profile preferences (goals, dietary, reminders)\n- Optional device data you sync via Health Connect (steps, exercise minutes, active calories)"
+            android:fontFamily="@font/convergence"
+            android:textSize="15sp"
+            android:textColor="@color/dark_green"
+            android:alpha="0.92"
+            android:layout_marginBottom="14dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Controls"
+            android:fontFamily="@font/convergence"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_green"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You can disable reminders in Settings, and revoke Health Connect permissions anytime in system settings."
+            android:fontFamily="@font/convergence"
+            android:textSize="15sp"
+            android:textColor="@color/dark_green"
+            android:alpha="0.92"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Save"
+            android:textColor="@color/surface_white"
+            android:textSize="15sp"
+            app:backgroundTint="@color/dark_green"
+            app:cornerRadius="12dp"
+            android:layout_marginTop="18dp"/>
+
+    </LinearLayout>
+</ScrollView>
+

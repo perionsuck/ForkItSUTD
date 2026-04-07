@@ -99,10 +99,9 @@ public class GoalsFragment extends Fragment {
         btnSave.setEnabled(false);
 
         // Check if a goals row already exists for this user
-        // Using "eq.{userId}" filter — replace with actual user ID once auth is wired up
         String userIdFilter = "eq." + HomeFragment.userGoals.getId();
 
-        supabaseApi.getUserGoals("*").enqueue(new Callback<List<UserGoals>>() {
+        supabaseApi.getUserGoals("*", userIdFilter).enqueue(new Callback<List<UserGoals>>() {
             @Override
             public void onResponse(@NonNull Call<List<UserGoals>> call, @NonNull Response<List<UserGoals>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {

@@ -16,12 +16,19 @@ import com.example.forkit.R;
 import com.example.forkit.models.FoodEntry;
 import com.example.forkit.utils.PrefsHelper;
 import com.example.forkit.utils.DateUtils;
+import com.example.forkit.utils.FoodStore;
+import com.example.forkit.utils.SupabaseApi;
+import com.example.forkit.utils.SupabaseClient;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecommendationsFragment extends Fragment {
 
@@ -189,11 +196,44 @@ public class RecommendationsFragment extends Fragment {
                 FoodEntry entry = (detail != null || portion > 0)
                         ? new FoodEntry(name, cal, p, c, f, meal, detail != null ? detail : "", portion)
                         : new FoodEntry(name, cal, p, c, f, meal);
-                HomeFragment.foodEntries.add(entry);
+                addEntryAndSync(entry);
                 if (getContext() != null) new PrefsHelper(getContext()).onFoodLogged();
                 goHome();
             });
         }
         d.show();
+    }
+
+    private void addEntryAndSync(FoodEntry entry) {
+        FoodStore.add(entry);
+        if (getContext() == null) return;
+
+        PrefsHelper prefs = new PrefsHelper(getContext());
+        String userId = prefs.getUserId();
+        if (userId == null || userId.isEmpty()) return;
+
+        entry.setUserId(userId);
+        entry.setUserAdded(true);
+        String token = prefs.getAccessToken();
+        if (token != null && !token.isEmpty()) {
+            SupabaseClient.setAccessToken(token);
+        }
+        SupabaseApi api = SupabaseClient.getClient().create(SupabaseApi.class);
+        api.insertFoodEntry(entry).enqueue(new Callback<List<FoodEntry>>() {
+            @Override
+            public void onResponse(Call<List<FoodEntry>> call, Response<List<FoodEntry>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null && !response.body().isEmpty()) {
+                        entry.setId(response.body().get(0).getId());
+                    }
+                    if (getActivity() instanceof MainActivity) {
+                        ((MainActivity) getActivity()).refreshFoodEntriesFromCloud();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FoodEntry>> call, Throwable t) {}
+        });
     }
 }

@@ -93,7 +93,7 @@
             android:layout_height="52dp"
             android:text="+ Add custom food"
             android:textSize="15sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/surface_white"
             app:backgroundTint="@color/dark_green"
             app:cornerRadius="12dp"/>
     </LinearLayout>
