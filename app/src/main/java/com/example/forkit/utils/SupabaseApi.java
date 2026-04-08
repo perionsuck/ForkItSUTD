@@ -9,7 +9,7 @@ import retrofit2.http.*;
 
 public interface SupabaseApi {
 
-    // --- FoodEntry ---
+    //FoodEntry
     @GET("food_entries")
     Call<List<FoodEntry>> getFoodEntries(
             @Query("order") String order,         // e.g. "timestamp.desc"
@@ -21,9 +21,9 @@ public interface SupabaseApi {
     Call<List<FoodEntry>> insertFoodEntry(@Body FoodEntry entry);
 
     @DELETE("food_entries")
-    Call<Void> deleteFoodEntry(@Query("id") String idFilter); // e.g. "eq.5"
+    Call<Void> deleteFoodEntry(@Query("id") String idFilter);
 
-    // --- UserGoals ---
+    //UserGoals
     @GET("user_goals")
     Call<List<UserGoals>> getUserGoals(
             @Query("select") String select,

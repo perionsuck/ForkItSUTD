@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.TimeZone;
 
 /**
- * Central in-memory store for logged foods + heap-backed analytics.
+ * in-memory store for logged foods and heap-backed analytics.
  *
  * Goals:
- * - Insert: O(log n) update to top-meal heap + daily totals + peak-day heap
+ * - Insert: O(log n) update to top-meal heap, daily totals and peak-day heap
  * - Peek: O(1) for top meal and peak day
  *
  * Notes:
- * - We rebuild on full cloud refresh or deletes (O(n)) which keeps code simple and reliable.
+ * - rebuild on full cloud refresh or deletes (O(n))
  */
 public final class FoodStore {
 
@@ -140,7 +140,7 @@ public final class FoodStore {
         return (dow + 5) % 7;
     }
 
-    // ---- Heaps ----
+    //Heaps
 
     private static final class MaxMealHeap {
         private final ArrayList<FoodEntry> a;

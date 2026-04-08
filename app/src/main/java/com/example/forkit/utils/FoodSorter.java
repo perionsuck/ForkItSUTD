@@ -235,7 +235,7 @@ public class FoodSorter {
         while (j < rightArr.size()) list.set(k++, rightArr.get(j++));
     }
 
-    // ── QUICK SORT O(n log n) avg ──
+    // ── implement quicksort just to ensure time complexity O(n log n) avg
     private static void quickSort(List<FoodEntry> list, int low, int high, SortBy sortBy) {
         if (low < high) {
             int pivot = partition(list, low, high, sortBy);

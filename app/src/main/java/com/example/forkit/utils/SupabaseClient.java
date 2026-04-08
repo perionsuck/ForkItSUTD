@@ -43,7 +43,7 @@ public class SupabaseClient {
     }
 
     /**
-     * Updates in-memory JWT after a refresh without rebuilding Retrofit (OkHttp will retry with new header).
+     * updates in-memory JWT after a refresh without rebuilding Retrofit (OkHttp will retry with new header).
      */
     private static void updateAccessTokenMemory(String token) {
         accessToken = token != null ? token : ANON_KEY;

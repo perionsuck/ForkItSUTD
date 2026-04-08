@@ -21,11 +21,7 @@ import com.example.forkit.utils.PrefsHelper;
 
 import java.util.Set;
 
-/**
- * Multi-device sync screen via Health Connect.
- *
- * Polar path: Polar Flow -> Health Connect -> ForkIt reads Health Connect.
- */
+
 public class DeviceSyncFragment extends Fragment {
 
     private TextView tvStatus;

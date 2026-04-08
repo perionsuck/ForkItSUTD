@@ -417,7 +417,7 @@ public class SettingsFragment extends Fragment {
         });
         rv.setAdapter(adapter);
 
-        // Build summaries using existing HistoryFragment logic by instantiating it is overkill; do minimal grouping here.
+        // build summaries using existing HistoryFragment logic by instantiating it is overkill jsut do minimal grouping here.
         java.util.List<com.example.forkit.models.FoodEntry> entries = FoodStore.getEntriesView();
         java.util.Map<String, com.example.forkit.activities.HistoryFragment.DaySummary> map = new java.util.HashMap<>();
         java.util.TimeZone tz = java.util.TimeZone.getTimeZone("Asia/Singapore");
@@ -522,7 +522,7 @@ public class SettingsFragment extends Fragment {
             }
         });
     }
-
+    //pretty sure this is screwed up
     private void openHealthConnectStore() {
         try {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.apps.healthdata"));

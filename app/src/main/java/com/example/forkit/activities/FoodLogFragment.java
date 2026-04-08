@@ -76,7 +76,7 @@ public class FoodLogFragment extends Fragment {
                 R.layout.item_spinner_dropdown, sortOptions);
         spinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         sortSpinner.setAdapter(spinnerAdapter);
-        // Default to "Most Calories" (highest first) so the log is sorted by highest immediately.
+        // default to "most calories" (highest first) so the log is sorted by highest immediately.
         sortSpinner.setSelection(2, false);
 
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

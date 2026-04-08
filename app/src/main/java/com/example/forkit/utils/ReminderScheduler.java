@@ -23,7 +23,7 @@ public final class ReminderScheduler {
     public static void apply(@NonNull Context ctx, boolean enabled, @NonNull String timesCsv) {
         WorkManager wm = WorkManager.getInstance(ctx.getApplicationContext());
 
-        // Cancel all existing reminder works (we use fixed slots 0..9).
+        // cancel all existing reminder works (we use fixed slots 0..9).
         for (int i = 0; i < 10; i++) {
             wm.cancelUniqueWork(WORK_PREFIX + i);
         }
@@ -42,7 +42,6 @@ public final class ReminderScheduler {
     }
 
     static long delayUntilNext(int hour, int minute) {
-        // Match other parts of the app using Singapore timezone assumptions.
         TimeZone tz = TimeZone.getTimeZone("Asia/Singapore");
         Calendar now = Calendar.getInstance(tz);
         Calendar next = Calendar.getInstance(tz);

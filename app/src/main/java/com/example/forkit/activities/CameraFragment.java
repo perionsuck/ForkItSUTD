@@ -57,7 +57,7 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+//DO NOT TOUCH ANYTHING IDK HOW IT WORKS AND IT JUST DOES
 public class CameraFragment extends Fragment {
 
     private static final String TAG = "CameraFragment";
@@ -133,10 +133,9 @@ public class CameraFragment extends Fragment {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
             return;
         }
-        launchCamera();
+        launchCamera(); //show camera operation
     }
 
-    /** Shows the scan result screen with sample data (for preview/demo). */
     private void showSampleScanResult() {
         GeminiNutritionResult sample = new GeminiNutritionResult();
         sample.name = "Grilled chicken salad";
@@ -161,8 +160,9 @@ public class CameraFragment extends Fragment {
                             requireContext().getPackageName() + ".fileprovider", f);
                 }
             }
-        } catch (Exception ignored) {}
-        showScanResult(sampleUri != null ? sampleUri : Uri.EMPTY, sample);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void launchCamera() {
@@ -225,18 +225,18 @@ public class CameraFragment extends Fragment {
                 String base64 = Base64.encodeToString(jpegBytes, Base64.NO_WRAP);
                 Log.d(TAG, "Base64 length=" + (base64 != null ? base64.length() : -1));
 
-                GeminiApi.GeminiRequest.Part.InlineData imgData = new GeminiApi.GeminiRequest.Part.InlineData();
+                GeminiApi.InlineData imgData = new GeminiApi.InlineData();
                 imgData.mimeType = "image/jpeg";
                 imgData.data = base64;
-                GeminiApi.GeminiRequest.Part[] parts = {
-                        new GeminiApi.GeminiRequest.Part(imgData),
-                        new GeminiApi.GeminiRequest.Part(NUTRITION_PROMPT)
+                GeminiApi.Part[] parts = {
+                        new GeminiApi.Part(imgData),
+                        new GeminiApi.Part(NUTRITION_PROMPT)
                 };
-                GeminiApi.GeminiRequest.Content content = new GeminiApi.GeminiRequest.Content();
+                GeminiApi.Content content = new GeminiApi.Content();
                 content.parts = parts;
                 GeminiApi.GeminiRequest request = new GeminiApi.GeminiRequest(
-                        new GeminiApi.GeminiRequest.Content[]{content},
-                        new GeminiApi.GeminiRequest.GenerationConfig()
+                        new GeminiApi.Content[]{content},
+                        new GeminiApi.GenerationConfig()
                 );
                 Log.d(TAG, "Calling Gemini model with responseMimeType=" + request.generationConfig.responseMimeType);
 
@@ -419,28 +419,41 @@ public class CameraFragment extends Fragment {
     private void addMealFromResult(View v, Uri uri, String mealType) {
         EditText etName = v.findViewById(R.id.et_meal_name);
         EditText etIng = v.findViewById(R.id.et_meal_ingredients);
-        String name = etName != null && etName.getText() != null ? etName.getText().toString().trim() : "";
-        if (TextUtils.isEmpty(name)) name = "Meal";
-        String ing = etIng != null && etIng.getText() != null ? etIng.getText().toString().trim() : "";
+
+        String name = etName.getText().toString().trim();
+        if (name.isEmpty()) name = "Meal";
+
+        String ing = etIng.getText().toString().trim();
+
         int cal = Math.round(parseFloatSafe(textOf(v, R.id.et_meal_kcal), 0));
         float protein = parseFloatSafe(textOf(v, R.id.et_protein_g), 0);
         float carbs = parseFloatSafe(textOf(v, R.id.et_carbs_g), 0);
         float fat = parseFloatSafe(textOf(v, R.id.et_fat_g), 0);
-        int portion = Math.round(parseFloatSafe(textOf(v, R.id.et_portion_g), scanResultState != null ? scanResultState.baselinePortionG : 350f));
-        if (portion < 0) portion = 0;
+        int portion = Math.round(parseFloatSafe(textOf(v, R.id.et_portion_g),
+                scanResultState != null ? scanResultState.baselinePortionG : 0));
+        if (portion < 0) {
+            portion = 0;
+        }
 
         FoodEntry entry = new FoodEntry(capitalize(name), cal, protein, carbs, fat, mealType, ing, portion);
-        if (uri != null && !Uri.EMPTY.equals(uri)) entry.setImagePath(uri.toString());
+        if (uri != null && !Uri.EMPTY.equals(uri)) {
+            entry.setImagePath(uri.toString());
+        }
+
         addEntryAndSync(entry);
         new PrefsHelper(requireContext()).onFoodLogged();
+
         resultContainer.setVisibility(View.GONE);
         inputView.setVisibility(View.VISIBLE);
+
         Snackbar.make(requireView(), capitalize(name) + " added", Snackbar.LENGTH_SHORT).show();
     }
 
+
     private static String textOf(View v, int id) {
         EditText et = v.findViewById(id);
-        return et != null && et.getText() != null ? et.getText().toString().trim() : "";
+        if (et == null) return "";
+        return et.getText().toString().trim();
     }
 
     private static float parseFloatSafe(String s, float def) {

@@ -56,7 +56,7 @@ public class GoalsFragment extends Fragment {
             if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).openDrawer();
         });
 
-        // Load existing goals into fields
+        // this is to load existing goals into fields
         etName.setText(HomeFragment.userGoals.getUserName());
         etCalGoal.setText(String.valueOf(HomeFragment.userGoals.getDailyCalorieGoal()));
         etBurnGoal.setText(String.valueOf(HomeFragment.userGoals.getDailyBurnGoal()));
@@ -68,7 +68,6 @@ public class GoalsFragment extends Fragment {
     }
 
     private void saveGoals() {
-        // Validate inputs first
         String name;
         int calGoal, burnGoal;
         float protein, carbs, fat;
@@ -87,7 +86,7 @@ public class GoalsFragment extends Fragment {
             return;
         }
 
-        // Update local in-memory object
+        // must update local in memory object
         HomeFragment.userGoals.setUserName(name);
         HomeFragment.userGoals.setDailyCalorieGoal(calGoal);
         HomeFragment.userGoals.setDailyBurnGoal(burnGoal);
@@ -95,22 +94,22 @@ public class GoalsFragment extends Fragment {
         HomeFragment.userGoals.setCarbsGoal(carbs);
         HomeFragment.userGoals.setFatGoal(fat);
 
-        // Disable button while saving
+        // this is to disable button while saving
         btnSave.setEnabled(false);
 
-        // Check if a goals row already exists for this user
+        // check for goal existence if any
         String userIdFilter = "eq." + HomeFragment.userGoals.getId();
 
         supabaseApi.getUserGoals("*", userIdFilter).enqueue(new Callback<List<UserGoals>>() {
             @Override
             public void onResponse(@NonNull Call<List<UserGoals>> call, @NonNull Response<List<UserGoals>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    // Row exists — PATCH (update) it
+                    //if row exists then we update it
                     String existingId = "eq." + response.body().get(0).getId();
                     supabaseApi.updateUserGoals(existingId, HomeFragment.userGoals)
                             .enqueue(saveCallback);
                 } else {
-                    // No row yet — POST (insert) it
+                    // this is just to update
                     supabaseApi.insertUserGoals(HomeFragment.userGoals)
                             .enqueue(saveCallback);
                 }
@@ -125,7 +124,6 @@ public class GoalsFragment extends Fragment {
         });
     }
 
-    // Shared callback for both insert and update
     private final Callback<List<UserGoals>> saveCallback = new Callback<List<UserGoals>>() {
         @Override
         public void onResponse(@NonNull Call<List<UserGoals>> call, @NonNull Response<List<UserGoals>> response) {

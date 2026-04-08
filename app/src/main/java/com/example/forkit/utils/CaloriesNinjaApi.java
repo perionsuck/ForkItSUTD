@@ -15,6 +15,7 @@ public interface CaloriesNinjaApi {
     Call<List<NutritionItem>> getNutrition(
             @Header("X-Api-Key") String apiKey,
             @Query("query") String query
+
     );
 
     class NutritionItem {

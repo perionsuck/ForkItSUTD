@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
     private View[] waterBars;
     private PrefsHelper prefs;
 
-    // Logged foods are stored in FoodStore; keep static list only for backward compatibility.
+    // logged foods that are inserted are stored in FoodStore; keep static list only for backward compatibility.
     public static List<FoodEntry> foodEntries = new ArrayList<>();
     public static UserGoals userGoals = new UserGoals();
 
@@ -178,7 +178,6 @@ public class HomeFragment extends Fragment {
     }
 
     private int getDayIndex() {
-        // Bars: 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri, 5=Sat, 6=Sun. Use Singapore timezone.
         java.util.Calendar cal = java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("Asia/Singapore"));
         int dow = cal.get(Calendar.DAY_OF_WEEK); // 1=Sun, 2=Mon, ..., 7=Sat
         return (dow + 5) % 7;

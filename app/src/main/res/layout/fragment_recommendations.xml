@@ -137,10 +137,30 @@
                 android:gravity="center_vertical">
                 <View android:layout_width="60dp" android:layout_height="60dp" android:background="@color/water_blue" android:alpha="0.3"/>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-                    <TextView android:id="@+id/tv_meal_1_name" android:text="Greek yoghurt bowl" android:fontFamily="@font/convergence" android:textSize="14sp" android:textColor="@color/dark_green"/>
-                    <TextView android:id="@+id/tv_meal_1_detail" android:text="1 bowl (450g)  P 20g C 15g F 13g" android:fontFamily="@font/convergence" android:textSize="12sp" android:textColor="@color/dark_green" android:alpha="0.7"/>
+                    <TextView android:id="@+id/tv_meal_1_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Greek yoghurt bowl"
+                        android:fontFamily="@font/convergence"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_green"/>
+                    <TextView android:id="@+id/tv_meal_1_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 bowl (450g)  P 20g C 15g F 13g"
+                        android:fontFamily="@font/convergence"
+                        android:textSize="12sp"
+                        android:textColor="@color/dark_green"
+                        android:alpha="0.7"/>
                 </LinearLayout>
-                <TextView android:id="@+id/tv_meal_1_kcal" android:text="320 kcal" android:fontFamily="@font/convergence" android:textSize="13sp" android:textColor="@color/dark_green" android:layout_marginEnd="8dp"/>
+                <TextView android:id="@+id/tv_meal_1_kcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="320 kcal"
+                    android:fontFamily="@font/convergence"
+                    android:textSize="13sp"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginEnd="8dp"/>
                 <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_plus_green" android:contentDescription="add"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -161,10 +181,23 @@
                 android:gravity="center_vertical">
                 <View android:layout_width="60dp" android:layout_height="60dp" android:background="@color/water_blue" android:alpha="0.3"/>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-                    <TextView android:id="@+id/tv_meal_2_name" android:text="Chicken salad" android:fontFamily="@font/convergence" android:textSize="14sp" android:textColor="@color/dark_green"/>
-                    <TextView android:id="@+id/tv_meal_2_detail" android:text="1 bowl (450g)  P 13g C 20g F 4g" android:fontFamily="@font/convergence" android:textSize="12sp" android:textColor="@color/dark_green" android:alpha="0.7"/>
+                    <TextView android:id="@+id/tv_meal_2_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chicken salad"
+                        android:fontFamily="@font/convergence"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_green"/>
+                    <TextView android:id="@+id/tv_meal_2_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 bowl (450g)  P 13g C 20g F 4g"
+                        android:fontFamily="@font/convergence"
+                        android:textSize="12sp"
+                        android:textColor="@color/dark_green"
+                        android:alpha="0.7"/>
                 </LinearLayout>
-                <TextView android:id="@+id/tv_meal_2_kcal" android:text="450 kcal" android:fontFamily="@font/convergence" android:textSize="13sp" android:textColor="@color/dark_green" android:layout_marginEnd="8dp"/>
+                <TextView android:id="@+id/tv_meal_2_kcal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="450 kcal" android:fontFamily="@font/convergence" android:textSize="13sp" android:textColor="@color/dark_green" android:layout_marginEnd="8dp"/>
                 <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_plus_green" android:contentDescription="add"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -185,10 +218,10 @@
                 android:gravity="center_vertical">
                 <View android:layout_width="60dp" android:layout_height="60dp" android:background="@color/water_blue" android:alpha="0.3"/>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-                    <TextView android:id="@+id/tv_meal_3_name" android:text="Salmon with broccoli &amp; quinoa" android:fontFamily="@font/convergence" android:textSize="14sp" android:textColor="@color/dark_green"/>
-                    <TextView android:id="@+id/tv_meal_3_detail" android:text="1 bowl (500g)  P 32g C 40g F 15g" android:fontFamily="@font/convergence" android:textSize="12sp" android:textColor="@color/dark_green" android:alpha="0.7"/>
+                    <TextView android:id="@+id/tv_meal_3_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Salmon with broccoli &amp; quinoa" android:fontFamily="@font/convergence" android:textSize="14sp" android:textColor="@color/dark_green"/>
+                    <TextView android:id="@+id/tv_meal_3_detail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1 bowl (500g)  P 32g C 40g F 15g" android:fontFamily="@font/convergence" android:textSize="12sp" android:textColor="@color/dark_green" android:alpha="0.7"/>
                 </LinearLayout>
-                <TextView android:id="@+id/tv_meal_3_kcal" android:text="520 kcal" android:fontFamily="@font/convergence" android:textSize="13sp" android:textColor="@color/dark_green" android:layout_marginEnd="8dp"/>
+                <TextView android:id="@+id/tv_meal_3_kcal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="520 kcal" android:fontFamily="@font/convergence" android:textSize="13sp" android:textColor="@color/dark_green" android:layout_marginEnd="8dp"/>
                 <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_plus_green" android:contentDescription="add"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

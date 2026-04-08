@@ -154,7 +154,12 @@ public class RecommendationsFragment extends Fragment {
             bindMeal(m2, filtered.size() > 1 ? filtered.get(1) : null);
             bindMeal(m3, filtered.size() > 2 ? filtered.get(2) : null);
         }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (getContext() != null) {
+                android.widget.Toast.makeText(getContext(), "Recommendations failed: " + e.getMessage(), android.widget.Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void bindMeal(View card, MealRec m) {

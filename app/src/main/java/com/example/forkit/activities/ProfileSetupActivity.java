@@ -143,7 +143,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
         prefsHelper.setCarbsGoal(carbs);
         prefsHelper.setFatGoal(fat);
 
-        // Also update the in-memory object
+        // also update the memory object
         HomeFragment.userGoals = goals;
 
         supabaseApi.insertUserGoals(goals).enqueue(new Callback<List<UserGoals>>() {

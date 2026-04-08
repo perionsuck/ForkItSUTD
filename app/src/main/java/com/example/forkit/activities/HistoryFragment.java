@@ -78,7 +78,7 @@ public class HistoryFragment extends Fragment {
         ArrayList<DaySummary> days = new ArrayList<>(map.values());
         Collections.sort(days, (a, b) -> Long.compare(b.dayStartMs, a.dayStartMs));
 
-        // Fill in water history values
+        //fill in the water data
         for (DaySummary d : days) {
             d.waterMl = prefs.getWaterForDateKey(d.key);
         }
