@@ -114,7 +114,8 @@ public class SearchFragment extends Fragment {
 
             if (etSearch != null) etSearch.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -122,7 +123,8 @@ public class SearchFragment extends Fragment {
                 }
 
                 @Override
-                public void afterTextChanged(Editable s) {}
+                public void afterTextChanged(Editable s) {
+                }
             });
 
             if (etSearch != null) etSearch.setOnEditorActionListener((v, actionId, event) -> {
@@ -188,18 +190,19 @@ public class SearchFragment extends Fragment {
     }
 
 
-    // primary search CaloriesNinja first then Gemini as a fallback
+    // primary search using CaloriesNinjaApi first then use Gemini as a fallback if empty or error
 
 
     private void search(String query) {
         if (TextUtils.isEmpty(query)) return;
 
         try {
-            String q = normalizeQuery(query);
+            String normalizedQuery = normalizeQuery(query);
+            Log.w(TAG, "searching for:" + normalizedQuery);
 
             if (inFlight != null) inFlight.cancel();
 
-            inFlight = ApiClient.getApi().getNutrition(ApiClient.API_KEY, q);
+            inFlight = ApiClient.getApi().getNutrition(ApiClient.API_KEY, normalizedQuery);
             inFlight.enqueue(new Callback<List<CaloriesNinjaApi.NutritionItem>>() {
 
                 @Override
@@ -216,7 +219,7 @@ public class SearchFragment extends Fragment {
                                     && items.get(0).hasPremiumError()) {
                                 adapter.update(new ArrayList<>());
                                 Log.w(TAG, "CaloriesNinja premium wall – falling back to Gemini");
-                                searchWithGemini(query);
+                                searchWithGemini(normalizedQuery);
                                 return;
                             }
 
@@ -228,12 +231,12 @@ public class SearchFragment extends Fragment {
 
                             // Empty → Gemini fallback
                             Log.i(TAG, "CaloriesNinja returned 0 results – trying Gemini");
-                            searchWithGemini(query);
+                            searchWithGemini(normalizedQuery);
 
                         } else {
                             Log.w(TAG, "CaloriesNinja HTTP error – trying Gemini");
                             logHttpError(r);
-                            searchWithGemini(query);
+                            searchWithGemini(normalizedQuery);
                         }
                     } catch (Exception e) {
                         adapter.update(new ArrayList<>());
@@ -250,7 +253,7 @@ public class SearchFragment extends Fragment {
                     if (!isAdded()) return;
                     if (c.isCanceled()) return;
                     Log.w(TAG, "CaloriesNinja network failure – trying Gemini", t);
-                    searchWithGemini(query);
+                    searchWithGemini(normalizedQuery);
                 }
             });
 
@@ -275,7 +278,7 @@ public class SearchFragment extends Fragment {
         }
 
         String prompt = "You are a nutrition database. "
-                + "For the food item \"" + query + "\", return a JSON array of matching foods. "
+                + "For the food item of 1 \"" + query + "\", return a JSON array of matching foods. "
                 + "Each object in the array must have exactly these fields:\n"
                 + "- \"name\": string (food name with serving size, e.g. \"1 cup rice (200g)\")\n"
                 + "- \"calories\": number (kcal)\n"
@@ -286,6 +289,7 @@ public class SearchFragment extends Fragment {
                 + "Return between 1 and 5 common variations/serving sizes. "
                 + "If the food includes a local or regional dish, still estimate values. "
                 + "Return ONLY the JSON array, no markdown, no explanation.";
+        Log.w(TAG, "the prompt is:" + prompt);
 
         // Build request using existing GeminiApi model classes
         GeminiApi.Part part = new GeminiApi.Part(prompt);
@@ -314,17 +318,17 @@ public class SearchFragment extends Fragment {
                             adapter.update(items);
                         } else {
                             adapter.update(new ArrayList<>());
-                            showNoResults(query);
+                            showNoResultsForGemini(query);
                         }
                     } else {
                         adapter.update(new ArrayList<>());
-                        showNoResults(query);
+                        showNoResultsForGemini(query);
                         String err = r.errorBody() != null ? r.errorBody().string() : "";
                         Log.e(TAG, "Gemini HTTP error: " + r.code() + " " + err);
                     }
                 } catch (Exception e) {
                     adapter.update(new ArrayList<>());
-                    showNoResults(query);
+                    showNoResultsForGemini(query);
                     Log.e(TAG, "Gemini parse error", e);
                 }
             }
@@ -333,7 +337,7 @@ public class SearchFragment extends Fragment {
             public void onFailure(Call<GeminiApi.GeminiResponse> c, Throwable t) {
                 if (!isAdded()) return;
                 adapter.update(new ArrayList<>());
-                showNoResults(query);
+                showNoResultsForGemini(query);
                 Log.e(TAG, "Gemini network failure", t);
             }
         });
@@ -363,8 +367,8 @@ public class SearchFragment extends Fragment {
             // Strip markdown fences if present
             text = text.trim();
             if (text.startsWith("```json")) text = text.substring(7);
-            else if (text.startsWith("```"))  text = text.substring(3);
-            if (text.endsWith("```"))         text = text.substring(0, text.length() - 3);
+            else if (text.startsWith("```")) text = text.substring(3);
+            if (text.endsWith("```")) text = text.substring(0, text.length() - 3);
             text = text.trim();
 
             JSONArray foodArray = new JSONArray(text);
@@ -378,11 +382,11 @@ public class SearchFragment extends Fragment {
                 item.name = foodName + " (AI est.)";
 
                 // NutritionItem fields are JsonElement → wrap with JsonPrimitive
-                item.calories              = new JsonPrimitive(food.optDouble("calories", 0));
-                item.protein_g             = new JsonPrimitive(food.optDouble("protein_g", 0));
+                item.calories = new JsonPrimitive(food.optDouble("calories", 0));
+                item.protein_g = new JsonPrimitive(food.optDouble("protein_g", 0));
                 item.carbohydrates_total_g = new JsonPrimitive(food.optDouble("carbohydrates_total_g", 0));
-                item.fat_total_g           = new JsonPrimitive(food.optDouble("fat_total_g", 0));
-                item.serving_size_g        = new JsonPrimitive(food.optDouble("serving_size_g", 100));
+                item.fat_total_g = new JsonPrimitive(food.optDouble("fat_total_g", 0));
+                item.serving_size_g = new JsonPrimitive(food.optDouble("serving_size_g", 100));
 
                 results.add(item);
             }
@@ -399,22 +403,24 @@ public class SearchFragment extends Fragment {
     // Helpers
 
 
-    private void showNoResults(String query) {
+    private void showNoResultsForGemini(String query) {
         if (getContext() != null)
             Toast.makeText(getContext(),
-                    "No results found. Try: 1 " + query + " / 100g " + query,
+                    "No results found for:" + query,
                     Toast.LENGTH_SHORT).show();
     }
 
     private static String normalizeQuery(String raw) {
-        String q = raw != null ? raw.trim() : "";
-        if (q.isEmpty()) return q;
+        String query = raw != null ? raw.trim() : "";
+        if (query.isEmpty()) return query;
         boolean hasDigit = false;
-        for (int i = 0; i < q.length(); i++) {
-            if (Character.isDigit(q.charAt(i))) { hasDigit = true; break; }
+        for (int i = 0; i < query.length(); i++) {
+            if (Character.isDigit(query.charAt(i))) {
+                hasDigit = true;
+                break;
+            }
         }
-        if (!hasDigit) return "1 " + q;
-        return q;
+        return query;
     }
 
     private static void logHttpError(Response<?> r) {

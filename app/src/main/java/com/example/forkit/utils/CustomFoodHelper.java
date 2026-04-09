@@ -21,12 +21,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Shared "Add custom food" dialog and Supabase sync (same behavior as Search).
- */
 public final class CustomFoodHelper {
 
-    private CustomFoodHelper() {}
+    private CustomFoodHelper() {
+    }
 
     public static void show(Fragment fragment) {
         if (fragment.getContext() == null) return;
@@ -65,7 +63,8 @@ public final class CustomFoodHelper {
             float carbs = parseFloat(etCarbs != null ? etCarbs.getText() : null, 0f);
             float fat = parseFloat(etFat != null ? etFat.getText() : null, 0f);
             String mealType = "Lunch";
-            if (spinnerMeal != null && spinnerMeal.getSelectedItem() != null) mealType = spinnerMeal.getSelectedItem().toString();
+            if (spinnerMeal != null && spinnerMeal.getSelectedItem() != null)
+                mealType = spinnerMeal.getSelectedItem().toString();
             addFoodEntryAndSync(fragment, new FoodEntry(name, cal, protein, carbs, fat, mealType));
             new PrefsHelper(fragment.requireContext()).onFoodLogged();
             Toast.makeText(fragment.requireContext(), name + " added", Toast.LENGTH_SHORT).show();
@@ -103,7 +102,8 @@ public final class CustomFoodHelper {
             }
 
             @Override
-            public void onFailure(Call<List<FoodEntry>> call, Throwable t) {}
+            public void onFailure(Call<List<FoodEntry>> call, Throwable t) {
+            }
         });
     }
 

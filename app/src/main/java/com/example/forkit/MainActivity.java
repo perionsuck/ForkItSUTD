@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         });
         findViewById(R.id.drawer_logout).setOnClickListener(v -> logout());
 
-        // Fetch user goals from Supabase and populate in-memory + PrefsHelper
         String userId = prefs.getString("user_id", "");
         fetchUserGoals(userId);
         fetchFoodEntries(userId);
@@ -131,10 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     UserGoals goals = response.body().get(0);
 
-                    // Update in-memory goals used by HomeFragment and SettingsFragment
                     HomeFragment.userGoals = goals;
 
-                    // Sync into PrefsHelper so SettingsFragment dialogs show correct values
+                    // update prefs based on values fetched from supabase
                     PrefsHelper p = new PrefsHelper(MainActivity.this);
                     if (goals.getUserName() != null) p.setUserName(goals.getUserName());
                     if (goals.getUserHandle() != null) p.setUserHandle(goals.getUserHandle());
@@ -149,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                     p.setActivityLevel(goals.getActivityLevel());
                     p.setIsMale(goals.isMale());
 
-                    // Refresh the current fragment if it's SettingsFragment
+                    // refresh current fragment if SettingsFragment
                     runOnUiThread(() -> {
                         Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                         if (current instanceof SettingsFragment) {
@@ -202,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Reload food entries from Supabase after a local insert (or when UI may be stale).
+     * refetch food entries from supabase after user insert
      */
     public void refreshFoodEntriesFromCloud() {
         SharedPreferences prefs = getSharedPreferences("forkit_prefs", MODE_PRIVATE);

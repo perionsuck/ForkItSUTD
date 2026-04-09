@@ -1,4 +1,3 @@
-// utils/SupabaseClient.java
 package com.example.forkit.utils;
 
 import android.content.Context;
@@ -19,9 +18,9 @@ public class SupabaseClient {
 
     private static final String TAG = "SupabaseClient";
 
-    // TODO: move these to BuildConfig or a secrets file — never hardcode in production
     private static final String SUPABASE_HOST = "https://fbbfaymfxetiwgfkrkxw.supabase.co";
     private static final String REST_BASE = SUPABASE_HOST + "/rest/v1/";
+    // TODO: move anon key to env or smth
     public static final String ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZiYmZheW1meGV0aXdnZmtya3h3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTYxNTksImV4cCI6MjA4ODYzMjE1OX0.tIuYcHqTrmfxxiVPG8DFSETPf6TxK6Odwsvl9Ag1ukg";
 
     private static final String PREFS = "forkit_prefs";
@@ -42,9 +41,6 @@ public class SupabaseClient {
         retrofit = null;
     }
 
-    /**
-     * updates in-memory JWT after a refresh without rebuilding Retrofit (OkHttp will retry with new header).
-     */
     private static void updateAccessTokenMemory(String token) {
         accessToken = token != null ? token : ANON_KEY;
     }
@@ -93,10 +89,6 @@ public class SupabaseClient {
         return retrofit;
     }
 
-    /**
-     * Exchanges refresh_token for new access_token (and possibly rotated refresh_token).
-     * Called from OkHttp Authenticator on 401 JWT expired (PGRST303).
-     */
     private static synchronized boolean refreshSessionWithStoredToken() {
         Context ctx = appContext;
         if (ctx == null) {

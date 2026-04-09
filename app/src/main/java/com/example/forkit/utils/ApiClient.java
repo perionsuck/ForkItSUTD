@@ -14,7 +14,7 @@ public class ApiClient {
 
     public static final String API_KEY = "Qhk2BNrnlmg5MgY3wE7Q/A==66vtMH5kwHDTwGjX";
 
-    public static final String GEMINI_API_KEY = "AIzaSyDxoiZwsAPZYDC9jYJl9372yNp7puu0caY";
+    public static final String GEMINI_API_KEY = "AIzaSyBJpESetx3u9wUSXJsEFqp5bUYJ5SrmHBo";
 
     private static Retrofit retrofit;
     private static Retrofit geminiRetrofit;

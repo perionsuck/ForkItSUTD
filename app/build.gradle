@@ -48,24 +48,19 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
 
-    // Room Database
     implementation 'androidx.room:room-runtime:2.6.1'
     annotationProcessor 'androidx.room:room-compiler:2.6.1'
 
-    // Retrofit (food API)
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 
-    // Navigation
     implementation 'androidx.navigation:navigation-fragment:2.8.9'
     implementation 'androidx.navigation:navigation-ui:2.8.9'
 
-    // Health Connect (multi-device sync) + coroutines bridge
     implementation 'androidx.health.connect:connect-client:1.1.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
 
-    // WorkManager (reminders/notifications)
     implementation 'androidx.work:work-runtime:2.11.2'
 
     testImplementation libs.junit

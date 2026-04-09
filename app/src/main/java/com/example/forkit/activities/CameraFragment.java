@@ -133,7 +133,7 @@ public class CameraFragment extends Fragment {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
             return;
         }
-        launchCamera(); //show camera operation
+        launchCamera();
     }
 
     private void showSampleScanResult() {
@@ -146,7 +146,6 @@ public class CameraFragment extends Fragment {
         sample.fatG = 22;
         sample.portionG = 350;
         sample.confidence = 92;
-        Uri sampleUri = null;
         try {
             Drawable d = getResources().getDrawable(R.drawable.natural_food, null);
             if (d instanceof BitmapDrawable) {
@@ -156,8 +155,6 @@ public class CameraFragment extends Fragment {
                     FileOutputStream fos = new FileOutputStream(f);
                     bmp.compress(android.graphics.Bitmap.CompressFormat.JPEG, 90, fos);
                     fos.close();
-                    sampleUri = FileProvider.getUriForFile(requireContext(),
-                            requireContext().getPackageName() + ".fileprovider", f);
                 }
             }
         } catch (Exception e) {
@@ -576,6 +573,7 @@ public class CameraFragment extends Fragment {
     private static String extractJsonObject(String text) {
         if (text == null) return null;
         String t = text.trim();
+        // strips the ```json and ``` returned from the gemini response so we just get the plain JSON
         t = t.replaceAll("^```(?:json)?\\s*", "").replaceAll("\\s*```$", "").trim();
         int start = t.indexOf('{');
         int end = t.lastIndexOf('}');

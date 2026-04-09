@@ -16,7 +16,6 @@ public class FoodSorter {
         MEAL_TYPE
     }
 
-    // Main entry point
     public static List<FoodEntry> sort(List<FoodEntry> entries, SortBy sortBy) {
         if (entries == null || entries.size() <= 1) return entries;
         List<FoodEntry> list = new ArrayList<>(entries);

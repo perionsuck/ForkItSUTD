@@ -289,9 +289,6 @@ public class PrefsHelper {
         prefs.edit().putFloat(KEY_FAT_GOAL, f).apply();
     }
 
-    /**
-     * Calories burned from activity (steps/watch). 0 until connected.
-     */
     public int getCaloriesBurned() {
         return prefs.getInt(KEY_CALORIES_BURNED, 0);
     }

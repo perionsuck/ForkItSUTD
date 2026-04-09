@@ -42,7 +42,6 @@ public class FoodEntry {
         this.userAdded = true;
     }
 
-    // Getters
     public int getId() {
         return id != null ? id : 0;
     }
